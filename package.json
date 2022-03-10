@@ -4,13 +4,14 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "node src/index.js",
+    "start": "node talktech-backend/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "db-up": "docker-compose up -d",
     "db-status": "docker-compose ps",
     "db-down": "docker-compose down"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "socket.io": "^4.1.2"
   },

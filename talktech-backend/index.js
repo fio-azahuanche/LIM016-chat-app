@@ -1,15 +1,17 @@
 /* eslint-disable prettier/prettier */
 const express = require('express');
 const cors = require('cors');
+// const path = require('path');
 
 const app = express();
 
 const port = 5000;
 
-app.use = (cors());
+app.use(cors());
+// app.use('/home', express.static(path.join(__dirname,'/build')));
 
 app.get('/', (req, res) => {
-    res.json({msg: 'This is CORS-enabled for only example.com.'})
+    res.send('Hola mundo desde el backend')
 })
 
 app.listen(port, () => {

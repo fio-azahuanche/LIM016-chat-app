@@ -1,19 +1,26 @@
 /* eslint-disable prettier/prettier */
-const express = require('express');
-const cors = require('cors');
-// const path = require('path');
+
+const Server = require ('socket.io');
+
+const express= require ('express');
+
+const http = require ('http');
+
+const cors = require ('cors');
 
 const app = express();
 
-const port = 5000;
+const server=http.createServer(app);
+
+const io =  Server(server)
 
 app.use(cors());
-// app.use('/home', express.static(path.join(__dirname,'/build')));
+app.use(express.static(__dirname,'./build'));
 
-app.get('/', (req, res) => {
-    res.send('Hola mundo desde el backend')
-})
+io.on('connection', () => {
+        console.log('usuario conectado');
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+});
+server.listen(5000, () => {
+    console.log(`Servidor inicializado`)
 })

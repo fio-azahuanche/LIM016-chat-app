@@ -1,24 +1,19 @@
-import React from 'react';
-//import logo from './logo.svg';
-import axios from 'axios';
+import React,{useState} from 'react';
+import socket from './components/Socket';
+// import axios from 'axios';
 import './App.css';
 
 function App() {
-  //const prueba = () => {
-    axios.get('http://localhost:5000/').then(
-      (datos)=>{
-        console.log(datos);
-      }
+    socket.emit('conectado', 'Hola mundo desde el frontend uuuuuu');
+    //const [nombre,setNombre]=useState('');
+
+    return (
+
+        <div className = "App" >
+        Hola Mundo desde el frontend { ' ' }
+        </div>
+
     );
-    
-    //return datos;
-  //}
-  //prueba();
-  return (
-    <div className="App">
-      Hola Mundo desde el frontend
-    </div>
-  );
 }
 
 export default App;

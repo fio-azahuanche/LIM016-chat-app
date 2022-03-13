@@ -1,26 +1,44 @@
 /* eslint-disable prettier/prettier */
 
-const Server = require ('socket.io');
+
+ const {Server} = require ('socket.io');
 
 const express= require ('express');
+
+const app = express();
 
 const http = require ('http');
 
 const cors = require ('cors');
 
-const app = express();
+app.use(cors());
 
 const server=http.createServer(app);
 
-const io =  Server(server)
+ const io = new Server(server,{
+     cors:{
+         origin:"http://localhost:3000",
+         methods:["GET","POST"],
+     }
+ })
 
-app.use(cors());
-app.use(express.static(__dirname,'./build'));
 
-io.on('connection', () => {
-        console.log('usuario conectado');
+// app.use(express.static(__dirname,'./build'));
 
+io.on('connection', (socket) => {
+        console.log('usuario conectado',socket.id);
+        socket.on("join_canal",(data)=>{
+            socket.join(data);
+            console.log("user con id: ",socket.id," unido al canal: ",data);
+        })
+
+        socket.on("send_message",(data)=>{
+console.log(data);
+        });
+socket.on("disconnect",() => { 
+    console.log("user desconectado",socket.id);
 });
-server.listen(5000, () => {
+}); 
+server.listen(3001, () => {
     console.log(`Servidor inicializado`)
 })

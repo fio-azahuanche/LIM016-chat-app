@@ -6,7 +6,6 @@
     "scripts": {
         "start": "node talktech-backend",
         "dev": "nodemon index.js",
-
         "test": "echo \"Error: no test specified\" && exit 1",
         "db-up": "docker-compose up -d",
         "db-status": "docker-compose ps",

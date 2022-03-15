@@ -5,8 +5,7 @@
     "main": "src/index.js",
     "scripts": {
         "start": "node talktech-backend",
-        "dev": "nodemon index.js",
-
+        "dev": "PGUSER=default_database  nodemon index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "db-up": "docker-compose up -d",
         "db-status": "docker-compose ps",
@@ -15,6 +14,7 @@
     "dependencies": {
         "cors": "^2.8.5",
         "express": "^4.17.1",
+        "pg": "^8.7.3",
         "socket.io": "^4.4.1"
     },
     "devDependencies": {

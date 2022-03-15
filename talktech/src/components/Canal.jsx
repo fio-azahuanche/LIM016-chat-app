@@ -18,7 +18,7 @@ if(userName!==""&&canal!==""){
 return (
 
         <div className="canal">
-            <img src={require('../assets/Vector1.png')} alt="" className="corner-one" />
+            {/* <img src={require('../assets/Vector1.png')} alt="" className="corner-one" /> */}
         {!showChat ? (
             <div className="joinChatContainer">
             <h2 className="mb-5">TalkTech</h2>
@@ -43,8 +43,8 @@ return (
         ) : (
             <Chat socket={socket} userName={userName} canal={canal} />
         )}
-        <img src={require('../assets/Vector2.png')} alt="" className="corner-two"/>
-
+      {/*   <img src={require('../assets/Vector2.png')} alt="" className="corner-two"/>
+ */}
         </div>
     );
 }

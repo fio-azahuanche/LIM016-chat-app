@@ -11,15 +11,21 @@ body {
     margin: 0%;
     padding: 0%;
   /*   font-family: 'Raleway', sans-serif; */
-    background:#822659;
+    /* background:#822659; */
+    background-image:url("./assets/fondo3.jpg");
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat;
+    height:100vh;
 
 }
     .sectionLogin{
-        margin-top:200px;
+        padding-top:100px;
+        height:100vh;
     }
     .sectionLogin .divLogin{
         max-width:350px;
-        background:#e783ba4f;
+        background:#d4eaed63;
         border-radius:20px;
 
     }
@@ -27,10 +33,16 @@ body {
         font-size:14px;
         margin-right: 38px !important;
         color:white;
+        text-shadow: 1px 1px 1px rgb(41, 39, 39);
+    }
+    .linkContraseña:hover{
+        color:#812056;
+        text-shadow: none;
     }
     .btnLogin{
         background:#FFBCD1;
         color:#822659;
+        box-shadow:2px 4px 4px #812056;
         border-radius:10px;
         font-size:16px;
         font-family: 'Raleway', sans-serif;
@@ -38,6 +50,7 @@ body {
     .inputLogin{
         border-radius:10px;
         font-family: 'Raleway', sans-serif;
+        box-shadow:2px 4px 4px #812056;
     }
     .inputLogin::placeholder{
             color:#822659;
@@ -50,16 +63,21 @@ body {
     }
     .corner-two {
         position: absolute;
-        bottom:0px;
+        bottom: 0px;
         right:0px;
         z-index:-10;
     }
     h2 {
         color:#FFD2E0;
+        text-shadow:5px 5px 2px #801e54;
         font-size:60px;
         font-family: 'Architects Daughter', cursive;
     }
     .canal {
+        background-image:url("./assets/fondo3.jpg");
+        background-position:center;
+        background-size:cover;
+        background-repeat:no-repeat;
         width: 100vw;
         height: 100vh;
         font-family: 'Raleway', sans-serif;
@@ -103,7 +121,8 @@ body {
     .chat-window .chat-body {
         height: calc(450px - (45px + 70px));
         border: 1px solid #1d070e;
-        background-image:url("./assets/fondo3.jpg");
+        /* background-image:url("./assets/fondo3.jpg"); */
+        background:white;
         background-position:center;
         background-size:cover;
         background-repeat:no-repeat;
@@ -129,11 +148,11 @@ body {
         height: auto;
         min-height: 40px;
         max-width: 120px;
-        background-color: #c5c5ce;
+        background-color: #3fc5d6;
        /*  text-shadow:1px 1px 1px black; */
         box-shadow: 2px 2px 2px white;
         border-radius: 5px;
-        color: rgb(8, 8, 8);
+        color: white;
         display: flex;
         align-items: center;
         margin-right: 5px;
@@ -158,7 +177,7 @@ body {
     }
     #other .message-content {
         justify-content: flex-end;
-        background-color: #f6b5cd;
+        background-color: #60c242;
     }
     #other .message-meta {
         justify-content: flex-end;
@@ -209,11 +228,10 @@ body {
         color: #1d070e;
     }
     .colorUserName{
-        color: #ffffff;
-        text-shadow:1px 1px 1px #1d070e;
+        color: #070707;
         font-family:arial;
     }
     .colorUserName2{
-        color: #ffffff;
-        text-shadow:1px 1px 1px #1d070e;
+        color: #0c0c0c;
+        font-family:arial;
     }

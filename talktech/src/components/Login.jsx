@@ -9,7 +9,7 @@ function Login() {
 
     return (
         <section className="container sectionLogin">
-            <img src={require('../assets/Vector1.png')} alt="" className="corner-one" />
+            {/* <img src={require('../assets/Vector1.png')} alt="" className="corner-one" /> */}
             <div className="m-4">
                 <h2 className="text-center pt-4 pb-4">TalkTech</h2>
             </div>
@@ -23,7 +23,7 @@ function Login() {
                     <button className="btn btnLogin" onClick={handleInicio}>Iniciar Sesión</button>
                 </div>
             </div>
-            <img src={require('../assets/Vector2.png')} alt="" className="corner-two"/>
+            {/* <img src={require('../assets/Vector2.png')} alt="" className="corner-two"/> */}
         </section>
     )
 }

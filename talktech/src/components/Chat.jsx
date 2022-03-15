@@ -38,11 +38,11 @@ function Chat({ socket, userName, canal }) {
                     >
                         <div>
                         <div className="message-content">
-                            <p>{messageContent.message}</p>
+                            <p >{messageContent.message}</p>
                         </div>
-                        <div className="message-meta">
-                            <p id="time">{messageContent.time}</p>
-                            <p id="author">{messageContent.author}</p>
+                        <div className="message-meta pt-1 ">
+                            <p className="colorUserName" id="time">{messageContent.time}</p>
+                            <p className="colorUserName2" id="author">{messageContent.author}</p>
                         </div>
                         </div>
                     </div>
@@ -52,9 +52,10 @@ function Chat({ socket, userName, canal }) {
             </div>
             <div className="chat-footer">
                 <input
+                className="inputMessage"
                 type="text"
                 value={currentMessage}
-                placeholder="Hey..."
+                placeholder="Escribe aqui..."
                 onChange={(event) => {
                     setCurrentMessage(event.target.value);
                 }}
@@ -62,7 +63,7 @@ function Chat({ socket, userName, canal }) {
                     event.key === "Enter" && sendMessage();
                 }}
                 />
-                <button onClick={sendMessage}>&#9658;</button>
+                <button   onClick={sendMessage}>&#9658;</button>
             </div>
             </div>
         );

@@ -27,7 +27,7 @@ function Chat({ socket, userName, canal }) {
     return (
         <div className="chat-window">
             <div className="chat-header">
-                <p>Live Chat</p>
+                <p>TalkTech</p>
             </div>
             <div className="chat-body">
                 <ScrollToBottom className="message-container">

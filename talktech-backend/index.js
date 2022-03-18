@@ -1,6 +1,8 @@
 /* eslint-disable prettier/prettier */
 
+
 const { Server } = require('socket.io');
+const {Client}= require ('pg')
 
 const express = require('express');
 
@@ -9,9 +11,6 @@ const app = express();
 const http = require('http');
 
 const cors = require('cors');
-
-// const { Client } = require('pg');
-
 
 app.use(cors());
 
@@ -23,43 +22,50 @@ const io = new Server(server, {
     methods: ['GET', 'POST'],
   },
 });
-/* 
-const addPostUser = async () => {
-  const client = new Client({
-    PGHOST :'localhost',
-    PGUSER :'postgres',
-    PGDATABASE:'default_database',
-    PGPASSWORD :'postgres',
-    PGPORT:5432,
-    ssl:{
-      rejectUnauthorized: false
+/* const client= new Client('postgres://postgres:postgres@localhost:15432/default_database') */
+const client= new Client({
+  host:'localhost',
+  user:"postgres",
+  port: 15432,
+  database:'default_database',
+  password:"postgres"
+})
 
-    }
+client.connect();
+
+io.on('connection',(socket)=>{
+  console.log('usuario conectado', socket.id);
+  const idUser=(socket.id);
+  console.log(idUser);
+  socket.on('login_user', (data) => {
+    socket.join(data);
+    client.query(`INSERT INTO users (id_user, email_user, password_user) VALUES ('${idUser}','${data.email}', '${data.password}' )`, (err, res)=>{
+      if (err) {
+          console.error(err);
+          return;
+      }
+      console.log('Data insert successful',res);
+      client.end();
+  })
   });
-
-  await client.connect();
-
-  const res = await client.query(`INSERT INTO usuarios (id, nombre, correo, contraseña)
-  VALUES ('1', 'ymf', 'abcd@gmail.com', '123000')
-  `)
-  await client.end();
-  return res
-} */
-
-
-
-// app.use(express.static(__dirname,'./build'));
-
+})
 io.on('connection', (socket) => {
   console.log('usuario conectado', socket.id);
   socket.on('join_canal', (data) => {
     socket.join(data);
     console.log('user con id: ', socket.id, ' unido al canal: ', data);
-    // addPostUser().then((result)=> console.log(result))
   });
-
   socket.on('send_message', (data) => {
-    // eslint-disable-next-line no-unused-vars
+    socket.to(data.canal).emit('receive_message', data);
+  });
+  socket.on('disconnect', () => {
+    console.log('user desconectado', socket.id);
+  });
+});
+server.listen(3001, () => {
+  console.log(`Servidor inicializado`);
+});
+  // eslint-disable-next-line no-unused-vars
     /* client.query(`insert into usuarios (id, nombre) values ( ${socket.id}, 'Will' )`, (err, res)=>{
         if (err) {
             console.error(err);
@@ -68,13 +74,34 @@ io.on('connection', (socket) => {
         console.log('Data insert successful');
         client.end();
     }) */
-    socket.to(data.canal).emit('receive_message', data);
-  });
 
-  socket.on('disconnect', () => {
-    console.log('user desconectado', socket.id);
-  });
-});
-server.listen(3001, () => {
-  console.log(`Servidor inicializado`);
-});
+
+/*     pgadmin:
+    image: 'dpage/pgadmin4:5.6'
+    depends_on:
+      - postgres
+    ports:
+      - 15432:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
+      PGADMIN_DEFAULT_PASSWORD: pgadmin
+      PGADMIN_LISTEN_PORT: 80
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
+volumes:
+  postgres:
+  pgadmin:
+ */
+
+
+  /* 
+client.query('Select * from users', (err,res)=>{
+  if(!err){
+    console.log(res.rows);
+  }else{
+    console.log(err.message);
+  }
+   client.end();
+})
+ */

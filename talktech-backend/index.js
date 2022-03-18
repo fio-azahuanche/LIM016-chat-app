@@ -31,43 +31,33 @@ const client= new Client({
   password:"postgres"
 })
 
-console.log(client)
-
 client.connect();
-/* 
-client.query('Select * from users', (err,res)=>{
-  if(!err){
-    console.log(res.rows);
-  }else{
-    console.log(err.message);
-  }
-   client.end();
+
+io.on('connection',(socket)=>{
+  console.log('usuario conectado', socket.id);
+  const idUser=(socket.id);
+  console.log(idUser);
+  socket.on('login_user', (data) => {
+    socket.join(data);
+    client.query(`INSERT INTO users (id_user, email_user, password_user) VALUES ('${idUser}','${data.email}', '${data.password}' )`, (err, res)=>{
+      if (err) {
+          console.error(err);
+          return;
+      }
+      console.log('Data insert successful',res);
+      client.end();
+  })
+  });
 })
- */
-
-
 io.on('connection', (socket) => {
   console.log('usuario conectado', socket.id);
   socket.on('join_canal', (data) => {
     socket.join(data);
     console.log('user con id: ', socket.id, ' unido al canal: ', data);
-    client.query(`INSERT INTO users (id_user, name_user,email_user) VALUES (7, 'Alex', ${data} )`, (err, res)=>{
-      if (err) {
-          console.error(err);
-          return;
-      }
-      
-      console.log('Data insert successful',res);
-      client.end();
-  })
-
   });
-
   socket.on('send_message', (data) => {
-  
     socket.to(data.canal).emit('receive_message', data);
   });
-
   socket.on('disconnect', () => {
     console.log('user desconectado', socket.id);
   });
@@ -102,4 +92,16 @@ server.listen(3001, () => {
 volumes:
   postgres:
   pgadmin:
+ */
+
+
+  /* 
+client.query('Select * from users', (err,res)=>{
+  if(!err){
+    console.log(res.rows);
+  }else{
+    console.log(err.message);
+  }
+   client.end();
+})
  */

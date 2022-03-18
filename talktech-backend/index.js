@@ -23,31 +23,8 @@ const io = new Server(server, {
     methods: ['GET', 'POST'],
   },
 });
-/* 
-const addPostUser = async () => {
-  const client = new Client({
-    PGHOST :'localhost',
-    PGUSER :'postgres',
-    PGDATABASE:'default_database',
-    PGPASSWORD :'postgres',
-    PGPORT:5432,
-    ssl:{
-      rejectUnauthorized: false
 
-    }
-  });
-
-  await client.connect();
-
-  const res = await client.query(`INSERT INTO usuarios (id, nombre, correo, contraseña)
-  VALUES ('1', 'ymf', 'abcd@gmail.com', '123000')
-  `)
-  await client.end();
-  return res
-} */
-
-
-
+ 
 // app.use(express.static(__dirname,'./build'));
 
 io.on('connection', (socket) => {

@@ -4,6 +4,7 @@ import Canal from './Canal';
 import io from 'socket.io-client';
 import '../App.css';
 const socket=io.connect("http://localhost:3001")
+const userLoggued = React.createContext({});
 
 function Login() {
     const navigate = useNavigate();

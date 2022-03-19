@@ -51,13 +51,13 @@ io.on('connection',(socket)=> {
       if(err){
         console.log(err);
       }else{
-        const pgUserData=res.rows[0];
+        const userData=res.rows[0];
         // console.log(pgUserData)
         // AQUI poner condicionales para mandar mensaje de error al fronted, tal como , correo o contraseña invalidos
-        jwt.sign({email:pgUserData.email_user,password:pgUserData.password_user},'secretkey',(error,token)=>{
+        jwt.sign({email:userData.email_user,password:userData.password_user},'secretkey',(error,token)=>{
           const tokenUser=({
-           token: token.toString(),
-           userData:{...pgUserData}
+           token,
+           userData,
          });
          console.log(token,tokenUser);
          socket.emit('receive_token', tokenUser);

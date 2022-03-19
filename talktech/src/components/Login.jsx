@@ -4,6 +4,7 @@ import Canal from './Canal';
 import io from 'socket.io-client';
 import '../App.css';
 const socket=io.connect("http://localhost:3001")
+const userLoggued = React.createContext({});
 
 function Login() {
     const navigate = useNavigate();
@@ -23,6 +24,7 @@ function Login() {
             socket.emit("login_user", userData);
             
             socket.on("receive_token", (data) => {
+                console.log(data);
                 //para usar lo de la linea 30 la variable de estado login no deberia de existir y solo la data se guarda en el locastorage
                 setLogin(data);
             })

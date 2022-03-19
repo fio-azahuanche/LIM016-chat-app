@@ -5,6 +5,7 @@ const { Server } = require('socket.io');
 const {Client}= require ('pg')
 
 const express = require('express');
+const jwt = require("jsonwebtoken");
 
 const app = express();
 
@@ -30,10 +31,66 @@ const client= new Client({
   database:'default_database',
   password:"postgres"
 })
-
+/* io.use((socket,next)=>{
+  const email=socket.handshake.auth.email;
+  if(!email){
+    return next(new Error("Invalid email"))
+  }
+  socket.email=email,
+  socket.userId=
+}) */
 client.connect();
 
-io.on('connection',(socket)=>{
+io.on('connection',(socket)=> {
+  console.log('usuario conectado', socket.id);
+
+  socket.on('login_user',(dataUser) => {
+    
+    client.query(`SELECT * FROM  users WHERE email_user = '${dataUser.email}' AND password_user = '${dataUser.password}'`,(err,res) =>{
+      
+      if(err){
+        console.log(err);
+      }else{
+        const pgUserData=res.rows[0];
+        // console.log(pgUserData)
+        // AQUI poner condicionales para mandar mensaje de error al fronted, tal como , correo o contraseña invalidos
+        jwt.sign({email:pgUserData.email_user,password:pgUserData.password_user},'secretkey',(error,token)=>{
+          const tokenUser=({
+           token: token.toString(),
+           userData:{...pgUserData}
+         });
+         console.log(token,tokenUser);
+         socket.emit('receive_token', tokenUser);
+
+        })
+        
+      }
+      
+    });
+    
+
+  })
+   /*  client.query(`SELECT id_user, email_user, password_user FROM  users WHERE '${data.email}'= email_user and '${data.password}'= password_user`, (err, res)=>{
+      if (err) {
+          console.error(err);
+      }else{
+        const userData=res.rows[0];
+          jwt.sign({userData},'secretkey',(error,token)=>{
+           const tokenUser=({
+            token,
+            userData
+          })
+          // console.log(tokenUser);
+          
+        });
+         //  socket.to(data.token).emit('receive_login', data);
+       
+      }
+      client.end();
+    }) */
+  });
+
+/* io.on('connection',(socket)=> {
   console.log('usuario conectado', socket.id);
   const idUser=(socket.id);
   console.log(idUser);
@@ -48,7 +105,7 @@ io.on('connection',(socket)=>{
       client.end();
   })
   });
-})
+}) */
 io.on('connection', (socket) => {
   console.log('usuario conectado', socket.id);
   socket.on('join_canal', (data) => {
@@ -88,7 +145,6 @@ server.listen(3001, () => {
       PGADMIN_LISTEN_PORT: 80
     volumes:
       - pgadmin:/var/lib/pgadmin
-
 volumes:
   postgres:
   pgadmin:

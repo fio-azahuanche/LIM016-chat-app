@@ -24,6 +24,7 @@ function Login() {
             socket.emit("login_user", userData);
             
             socket.on("receive_token", (data) => {
+                console.log(data);
                 //para usar lo de la linea 30 la variable de estado login no deberia de existir y solo la data se guarda en el locastorage
                 setLogin(data);
             })

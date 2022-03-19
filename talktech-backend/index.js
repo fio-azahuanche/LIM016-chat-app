@@ -90,22 +90,41 @@ io.on('connection',(socket)=> {
     }) */
   });
 
-/* io.on('connection',(socket)=> {
-  console.log('usuario conectado', socket.id);
+io.on('connection',(socket)=> {
+  console.log('usuario registrado', socket.id);
   const idUser=(socket.id);
   console.log(idUser);
-  socket.on('login_user', (data) => {
-    socket.join(data);
-    client.query(`INSERT INTO users (id_user, email_user, password_user) VALUES ('${idUser}','${data.email}', '${data.password}' )`, (err, res)=>{
+  socket.on('signup_user', (data) => {
+    // socket.join(data);
+    client.query(`SELECT * FROM  users WHERE email_user = '${data.email}' `, (err,res)=>{
+      const userData=res.rows[0];
+      console.log(userData);
+      if(userData===undefined){
+
+        client.query(`INSERT INTO users (id_user, email_user, password_user, name_user) VALUES ('${idUser}','${data.email}', '${data.password}' ,'${data.name}')`, (error, resp)=>{
+          if (error) {
+              console.error(error);
+              return;
+          }
+          client.end();
+      })
+      }else{
+        socket.emit('recive_duplicate','Cuenta existente');
+        console.log('Ya esta registrado');
+      }
+      
+       })
+    /* client.query(`INSERT INTO users (id_user, email_user, password_user, name_user) VALUES ('${idUser}','${data.email}', '${data.password}' ,'${data.name}')`, (err, res)=>{
       if (err) {
           console.error(err);
           return;
       }
-      console.log('Data insert successful',res);
+      console.log('Data insert successful',res.rows[0]);
       client.end();
-  })
+  }) */
+  
   });
-}) */
+})
 io.on('connection', (socket) => {
   console.log('usuario conectado', socket.id);
   socket.on('join_canal', (data) => {
@@ -145,7 +164,6 @@ server.listen(3001, () => {
       PGADMIN_LISTEN_PORT: 80
     volumes:
       - pgadmin:/var/lib/pgadmin
-
 volumes:
   postgres:
   pgadmin:

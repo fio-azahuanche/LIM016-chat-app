@@ -145,7 +145,6 @@ server.listen(3001, () => {
       PGADMIN_LISTEN_PORT: 80
     volumes:
       - pgadmin:/var/lib/pgadmin
-
 volumes:
   postgres:
   pgadmin:

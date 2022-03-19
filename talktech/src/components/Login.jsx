@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Canal from './Canal';
 import io from 'socket.io-client';
@@ -8,18 +8,30 @@ const socket=io.connect("http://localhost:3001")
 function Login() {
     const navigate = useNavigate();
     const handleInicio = () => {
-        navigate('/canal');
+       // navigate('/canal');
     }
     const [emailUser, setEmailUser] = useState("");
     const [password, setPassword] = useState("");
-    const [login, setLogin] = useState(false);
+    const [login, setLogin] = useState("");
     const loginUser = () => {
         if (emailUser !== "" && password !== "") {
-            const userData={email:emailUser,password:password}
+            const userData={email:emailUser,password:password,token:''}
             socket.emit("login_user", userData);
-            setLogin(true);
+
+            setLogin(userData);
         }
     }
+    useEffect(() => {
+        socket.on("receive_login", (data) => {
+            setLogin((list)=>[...list,data]);
+            console.log("este es login",data);
+        })
+    }, []);
+   /* 
+    useEffect(() => {
+        console.log("este es login",login);
+    }, [login]); */
+   
     return (
         <section className="container sectionLogin">
         {!login ? (

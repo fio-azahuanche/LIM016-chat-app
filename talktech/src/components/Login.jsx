@@ -7,34 +7,48 @@ const socket=io.connect("http://localhost:3001")
 
 function Login() {
     const navigate = useNavigate();
-    const handleInicio = () => {
-       // navigate('/canal');
-    }
+    /* const handleInicio = () => {
+      navigate('/canal');
+    } */
     const [emailUser, setEmailUser] = useState("");
     const [password, setPassword] = useState("");
-    const [login, setLogin] = useState("");
+    // no deberia existir una variable de estado login, pues al darle click al boton login
+    // y si es correcta el email y contraseña cambiaria de ruta a /canal, ya no estariamos en la vista de login
+    // es decir el componente login ya no estaria en pantalla 
+    const [login, setLogin] = useState([]);
+
     const loginUser = () => {
         if (emailUser !== "" && password !== "") {
             const userData={email:emailUser,password:password,token:''}
             socket.emit("login_user", userData);
+            
+            socket.on("receive_token", (data) => {
+                //para usar lo de la linea 30 la variable de estado login no deberia de existir y solo la data se guarda en el locastorage
+                setLogin(data);
+            })
 
-            setLogin(userData);
+            //navigate('/canal');
         }
+        
     }
-    useEffect(() => {
+
+
+    /* useEffect(() => {
         socket.on("receive_login", (data) => {
             setLogin((list)=>[...list,data]);
             console.log("este es login",data);
         })
-    }, []);
-   /* 
+    }, []); */
+   
     useEffect(() => {
         console.log("este es login",login);
-    }, [login]); */
+    }, [login]);
    
     return (
         <section className="container sectionLogin">
-        {!login ? (
+            {/* no se necesita poner una condicional en la variable de estado login(si es que esta llegase a existir) porque todo
+            el return contiene al componente login que solo pertenece a la ruta /login */}
+        {login.length===0 ? (
             <div>
             <div className="m-4">
                 <h2 className="text-center pt-4 pb-4">TalkTech</h2>
@@ -55,7 +69,7 @@ function Login() {
             </div>
             </div>
              ) : (
-            <Canal />
+                 <div></div>
                 )}
         </section>
        

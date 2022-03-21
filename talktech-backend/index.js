@@ -106,7 +106,8 @@ io.on('connection',(socket)=> {
               console.error(error);
               return;
           }
-          client.end();
+          socket.emit('recive_duplicate', 'Registro correcto');
+          // client.end();
       })
       }else{
         socket.emit('recive_duplicate','Cuenta existente');

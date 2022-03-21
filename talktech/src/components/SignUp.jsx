@@ -39,11 +39,7 @@ function SignUp() {
     };
 
     // Showing success message
-    const successMessage = () => {
-
-    return (
-     // <div style={{ display: submitted ? '' : 'none', }} >
-<div  style={{display: submitted ? '' : 'none !important'}} class="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    const successMessage = <div  style={{display: submitted ? '' : 'none !important'}} class="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div className="modal-dialog modal-dialog-centered" role="document">
     <div className="modal-content">
       <div className="modal-header">
@@ -58,22 +54,16 @@ function SignUp() {
     </div>
   </div>
 </div>
-         //</div>
-      );
-    };
 
     // Showing error message if error is true
-    const errorMessage = () => {
-      return (
-        <div
+    const errorMessage =<div
           className="alert alert-danger p-2" role="alert"
           style={{
             display: error ? '' : 'none',
           }}>
           <p className='m-0'>Por favor, verifique que todos los campos estén correctos.</p>
         </div>
-      );
-    };
+      
     useEffect(() => {
       console.log("este es login",submitted);
   }, [submitted]);
@@ -99,8 +89,7 @@ function SignUp() {
 
       {/* Calling to the methods */}
       <div className="pb-5 d-flex justify-content-center">
-        {errorMessage()}
-        {successMessage()}
+        {(submitted&&!error)?successMessage:errorMessage}
       </div>
     </div>
   )

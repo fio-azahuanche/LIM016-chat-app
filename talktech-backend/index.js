@@ -1,16 +1,13 @@
 /* eslint-disable prettier/prettier */
-
-
+/* eslint-disable no-console */
 const { Server } = require('socket.io');
-const {Client}= require ('pg')
 
+const { Client } = require('pg');
 const express = require('express');
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 const app = express();
-
 const http = require('http');
-
 const cors = require('cors');
 
 app.use(cors());
@@ -23,15 +20,21 @@ const io = new Server(server, {
     methods: ['GET', 'POST'],
   },
 });
-/* const client= new Client('postgres://postgres:postgres@localhost:15432/default_database') */
-const client= new Client({
-  host:'localhost',
-  user:"postgres",
+
+// * This is the postgres connection to node
+const client = new Client({
+  host: 'localhost',
+  user: 'postgres',
   port: 15432,
-  database:'default_database',
-  password:"postgres"
-})
-/* io.use((socket,next)=>{
+  database: 'default_database',
+  password: 'postgres',
+}); // ? OTRA FORMA: const client= new Client('postgres://postgres:postgres@localhost:15432/default_database')
+
+client.connect();
+
+/* 
+  * Intento de autenticación
+ io.use((socket,next)=>{
   const email=socket.handshake.auth.email;
   if(!email){
     return next(new Error("Invalid email"))
@@ -39,38 +42,37 @@ const client= new Client({
   socket.email=email,
   socket.userId=
 }) */
-client.connect();
 
-io.on('connection',(socket)=> {
+// * Socket.io to Login
+io.on('connection', (socket) => {
   console.log('usuario conectado', socket.id);
 
-  socket.on('login_user',(dataUser) => {
-    
-    client.query(`SELECT * FROM  users WHERE email_user = '${dataUser.email}' AND password_user = '${dataUser.password}'`,(err,res) =>{
-      
-      if(err){
-        console.log(err);
-      }else{
-        const userData=res.rows[0];
-        // console.log(pgUserData)
-        // AQUI poner condicionales para mandar mensaje de error al fronted, tal como , correo o contraseña invalidos
-        jwt.sign({email:userData.email_user,password:userData.password_user},'secretkey',(error,token)=>{
-          const tokenUser=({
-           token,
-           userData,
-         });
-         console.log(token,tokenUser);
-         socket.emit('receive_token', tokenUser);
-
-        })
-        
+  socket.on('login_user', (dataUser) => {
+    client.query(
+      `SELECT * FROM  users WHERE email_user = '${dataUser.email}' AND password_user = '${dataUser.password}'`,
+      (err, res) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const userData = res.rows[0];
+          // ! AQUI poner condicionales para mandar mensaje de error al fronted, tal como , correo o contraseña invalidos
+          jwt.sign(
+            { email: userData.email_user, password: userData.password_user },
+            'secretkey',
+            (error, token) => {
+              const tokenUser = {
+                token,
+                userData,
+              };
+              console.log(token, tokenUser);
+              socket.emit('receive_token', tokenUser);
+            }
+          );
+        }
       }
-      
-    });
-    
-
-  })
-   /*  client.query(`SELECT id_user, email_user, password_user FROM  users WHERE '${data.email}'= email_user and '${data.password}'= password_user`, (err, res)=>{
+    );
+  });
+  /*  client.query(`SELECT id_user, email_user, password_user FROM  users WHERE '${data.email}'= email_user and '${data.password}'= password_user`, (err, res)=>{
       if (err) {
           console.error(err);
       }else{
@@ -88,43 +90,36 @@ io.on('connection',(socket)=> {
       }
       client.end();
     }) */
-  });
+});
 
-io.on('connection',(socket)=> {
-  console.log('usuario registrado', socket.id);
-  const idUser=(socket.id);
-  console.log(idUser);
+// * Socket.io to Register
+io.on('connection', (socket) => {
   socket.on('signup_user', (data) => {
-    // socket.join(data);
-    client.query(`SELECT * FROM  users WHERE email_user = '${data.email}' `, (err,res)=>{
-      const userData=res.rows[0];
-      console.log(userData);
-      if(userData===undefined){
-
-        client.query(`INSERT INTO users (id_user, email_user, password_user, name_user) VALUES ('${idUser}','${data.email}', '${data.password}' ,'${data.name}')`, (error, resp)=>{
-          if (error) {
-              console.error(error);
-              return;
-          }
-          client.end();
-      })
-      }else{
-        socket.emit('recive_duplicate','Cuenta existente');
-        console.log('Ya esta registrado');
+    client.query( `SELECT * FROM  users WHERE email_user = '${data.email}'`,
+      (err, res) => {
+        const userData = res.rows[0];
+        if (userData === undefined) {
+          client.query(`INSERT INTO users (id_user, email_user, password_user, name_user) VALUES ('${socket.id}','${data.email}', '${data.password}' ,'${data.name}')`
+          /** 
+           * TODO: preguntar para que sirve esto
+            , (error, resp)=>{
+            if (error) {
+                console.error(error);
+                return;
+            }
+            client.end();
+            } */
+          );
+          socket.emit('receives_duplicate', 'Registro correcto');
+        } else {
+          socket.emit('receives_duplicate', 'Cuenta existente');
+          console.log('fuera del INSERT',err);
+        }
       }
-      
-       })
-    /* client.query(`INSERT INTO users (id_user, email_user, password_user, name_user) VALUES ('${idUser}','${data.email}', '${data.password}' ,'${data.name}')`, (err, res)=>{
-      if (err) {
-          console.error(err);
-          return;
-      }
-      console.log('Data insert successful',res.rows[0]);
-      client.end();
-  }) */
-  
+    );
   });
-})
+});
+
 io.on('connection', (socket) => {
   console.log('usuario conectado', socket.id);
   socket.on('join_canal', (data) => {
@@ -141,8 +136,8 @@ io.on('connection', (socket) => {
 server.listen(3001, () => {
   console.log(`Servidor inicializado`);
 });
-  // eslint-disable-next-line no-unused-vars
-    /* client.query(`insert into usuarios (id, nombre) values ( ${socket.id}, 'Will' )`, (err, res)=>{
+// eslint-disable-next-line no-unused-vars
+/* client.query(`insert into usuarios (id, nombre) values ( ${socket.id}, 'Will' )`, (err, res)=>{
         if (err) {
             console.error(err);
             return;
@@ -150,7 +145,6 @@ server.listen(3001, () => {
         console.log('Data insert successful');
         client.end();
     }) */
-
 
 /*     pgadmin:
     image: 'dpage/pgadmin4:5.6'
@@ -169,8 +163,7 @@ volumes:
   pgadmin:
  */
 
-
-  /* 
+/* 
 client.query('Select * from users', (err,res)=>{
   if(!err){
     console.log(res.rows);

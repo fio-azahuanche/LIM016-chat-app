@@ -1,20 +1,23 @@
 import React,{useEffect, useState} from 'react';
+import { useNavigate } from 'react-router-dom';
 import validator from 'validator';
 import io from 'socket.io-client';
 
 const socket=io.connect("http://localhost:3001")
 
 function SignUp() {
-    // States for registration
+    const navigate = useNavigate();
+
+    // * States for registration
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     
-    // States for checking the errors
+    // * States for checking the errors
     const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(false);
- 
-    // Handling the form submission
+
+    // * Handling the form submission
     const signupUser = (e) => {
       e.preventDefault();
       if (name === '' || email === '' || password === '') {
@@ -25,44 +28,50 @@ function SignUp() {
         setError(true);
         setSubmitted(false);
       } else {
-        const userData={email,password,name}
-            
+        const userData = { email, password, name } 
         socket.emit("signup_user", userData);
         
-            socket.on("recive_duplicate", (data) => {
-                console.log(data);
+        socket.on("receives_duplicate", (data) => {
                 
-            })
-        setSubmitted(true);
-        setError(false);
+          if(data==='Cuenta existente'){
+            setSubmitted(false);
+            setError(true);
+          }else{
+            const idModal = document.getElementById('miModal');
+            idModal.setAttribute('class', 'show');
+            setSubmitted(true);
+            setError(false);
+            console.log(data);
+          }
+          
+        })
+        
       }
     };
 
-    // Showing success message
+    const closeModal = () => {
+      const idModal = document.getElementById('miModal');
+      idModal.setAttribute('class', 'modal');
+      navigate('/');
+    }
+
+    // * Showing success message
     const successMessage = () => {
 
     return (
-     // <div style={{ display: submitted ? '' : 'none', }} >
-<div  style={{display: submitted ? '' : 'none !important'}} class="modal fade" id="exampleModalCenter" tabIndex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div className="modal-dialog modal-dialog-centered" role="document">
-    <div className="modal-content">
-      <div className="modal-header">
-        <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+      <div id="miModal" className="modal">    
+        <div  className="modal-contenido">
+          <img src={require('../assets/check.gif')} alt="" className='gif' />
+          <h5 className="h2Modal">Registro éxitoso!</h5>
+          <button className='btn btn-success' onClick={closeModal}>Aceptar</button>
+        </div>
       </div>
-      <div className="modal-body">
-        ...
-      </div>
-      <div className="modal-footer">
-        <button type="button" className="btn btn-secondary" data-dismiss="modal">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div>
-         //</div>
+
+
       );
     };
 
-    // Showing error message if error is true
+    // * Showing error message if error is true
     const errorMessage = () => {
       return (
         <div
@@ -70,12 +79,13 @@ function SignUp() {
           style={{
             display: error ? '' : 'none',
           }}>
-          <p className='m-0'>Por favor, verifique que todos los campos estén correctos.</p>
+          <p className='m-0'>Por favor, revise todos los campos.</p>
         </div>
       );
     };
+
     useEffect(() => {
-      console.log("este es login",submitted);
+      console.log("submitted",submitted);
   }, [submitted]);
     return (
       <div className="container sectionLogin">
@@ -91,7 +101,7 @@ function SignUp() {
         </div>
         
         <div className="pb-5 d-flex justify-content-center">
-          <button className="btn btn-primary" data-toggle="modal" data-target={submitted?'#exampleModalCenter':''} onClick={signupUser} >Registrar
+          <button className="btn btnLogin" onClick={signupUser} >Registrar
           </button>
         </div>
         

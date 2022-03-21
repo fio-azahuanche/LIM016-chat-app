@@ -56,19 +56,22 @@ io.on('connection', (socket) => {
           console.log(err);
         } else {
           const userData = res.rows[0];
-          // ! AQUI poner condicionales para mandar mensaje de error al fronted, tal como , correo o contraseña invalidos
-          jwt.sign(
-            { email: userData.email_user, password: userData.password_user },
-            'secretkey',
-            (error, token) => {
-              const tokenUser = {
-                token,
-                userData,
-              };
-              console.log(token, tokenUser);
-              socket.emit('receive_token', tokenUser);
-            }
-          );
+          if(userData.verified_user === true) {
+            jwt.sign(
+              { email: userData.email_user, password: userData.password_user },
+              'secretkey',
+              (error, token) => {
+                const tokenUser = {
+                  token,
+                  userData,
+                };
+                console.log(token, tokenUser);
+                socket.emit('receive_token', tokenUser);
+              }
+            );
+          } else {
+            console.log('msg_error', 'Por favor, confirme correo electrónico.');
+          }          
         }
       }
     );

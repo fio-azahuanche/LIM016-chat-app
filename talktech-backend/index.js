@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const http = require('http');
 const cors = require('cors');
+const { sendEmail } = require('./config/mail.config');
 
 app.use(cors());
 
@@ -92,14 +93,33 @@ io.on('connection', (socket) => {
     }) */
 });
 
+function validate(email) {
+  io.on('connection', () => {
+   client.query(`UPDATE users SET verified_user = true WHERE email_user='${email}'`)
+  });
+} 
+
+const getTemplate = (name,email) => {
+    return `
+      Mensajeeeee para ${name}
+      <a href="http://localhost:3000"><button onclick="${validate(email)}">Confirmar</button></a>
+      `
+}
+
 // * Socket.io to Register
 io.on('connection', (socket) => {
   socket.on('signup_user', (data) => {
     client.query( `SELECT * FROM  users WHERE email_user = '${data.email}'`,
-      (err, res) => {
+      async (err, res) => {
         const userData = res.rows[0];
         if (userData === undefined) {
-          client.query(`INSERT INTO users (id_user, email_user, password_user, name_user) VALUES ('${socket.id}','${data.email}', '${data.password}' ,'${data.name}')`
+          // * Obtener un template
+          const template = getTemplate(data.name, data.email);
+
+          //* Enviar email
+          await sendEmail(data.email, 'Esto es una prueba', template);
+
+          client.query(`INSERT INTO users (id_user, email_user, password_user, name_user, verified_user) VALUES ('${socket.id}','${data.email}', '${data.password}' ,'${data.name}', false)`
           /** 
            * TODO: preguntar para que sirve esto
             , (error, resp)=>{

@@ -63,7 +63,8 @@ function SignUp() {
         <div  className="modal-contenido">
           <img src={require('../assets/check.gif')} alt="" className='gif' />
           <h5 className="h2Modal">Registro éxitoso!</h5>
-          <button className='btn btn-success' onClick={closeModal}>Aceptar</button>
+          <p className="h2Modal">Revise su correo para validar.</p>
+          <button className='btn btn-secondary' onClick={closeModal}>Cerrar</button>
         </div>
       </div>
 

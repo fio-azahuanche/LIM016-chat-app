@@ -258,7 +258,7 @@ body {
         margin-top: 50%;
     }
     
-    .modal {
+    .modal-success {
         background-color: rgba(0, 0, 0, 0.8);
         position: fixed;
         top: 0;
@@ -271,7 +271,7 @@ body {
         z-index: -2;
     }
     
-    .show {
+    .show-modal {
         pointer-events: auto;
         background-color: rgba(0, 0, 0, 0.60);
         position: fixed;
@@ -284,3 +284,55 @@ body {
         z-index: 100;
     }
     
+    /* Contactos */
+    .sectionContact {
+        border-radius: 40px 40px 0 0;
+        background-image: url('./assets/fondo3.jpg');
+        opacity: 0.8;
+        width: 100%;
+        height: 100vh;
+    }
+    .paddingNav {
+        padding-left: 20px !important;
+    }
+    .bg-pink {
+        background-color: #D885A3;
+    }
+    .menu{
+        color: white;
+        font-size: 18px;
+    }
+    .navbarChat {
+        display: flex;
+        flex-direction: row;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+        justify-content: space-evenly;
+    }
+    .text-chat{
+        color: #801e54;
+    }
+    .bg-navBar{
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+    .img-talktech{
+        padding-left: 10px;
+    }
+    .modal-contact {
+        background-color: white;
+        width: 300px;
+        height: 120px;
+        padding: 15px 20px 0px 20px;
+        margin: 20% auto;
+        position: relative;
+        opacity: 1;
+        pointer-events: auto;
+        border-radius: 15px;
+        z-index: -1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50%;
+    }

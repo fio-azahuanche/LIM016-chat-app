@@ -114,8 +114,10 @@ io.on('connection', (socket) => {
   socket.on('signup_user', (data) => {
     client.query( `SELECT * FROM  users WHERE email_user = '${data.email}'`,
       async (err, res) => {
-        const userData = res.rows[0];
-        if (userData === undefined) {
+        const userData = res.rows;
+        console.log('antes del if', userData.length);
+        if (userData.length === 0) {
+          console.log('dentro del if', userData.length);
           // * Obtener un template
           const template = getTemplate(data.name, data.email);
 

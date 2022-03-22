@@ -104,6 +104,7 @@ io.on('connection', (socket) => {
 function validate(email) {
   io.on('connection', () => {
    client.query(`UPDATE users SET verified_user = true WHERE email_user='${email}'`)
+   console.log('estamos en validate');
   });
 } 
 
@@ -128,7 +129,7 @@ io.on('connection', (socket) => {
 
           //* Enviar email
           await sendEmail(data.email, 'Esto es una prueba', template);
-
+          console.log('aquiii',res);
           client.query(`INSERT INTO users (id_user, email_user, password_user, name_user, verified_user) VALUES ('${socket.id}','${data.email}', '${data.password}' ,'${data.name}', false)`
           /** 
            * TODO: preguntar para que sirve esto
@@ -176,12 +177,12 @@ io.on('connection', (socket) => {
   });
 });
 
-/* io.on('connection', (socket) => {
+io.on('connection', (socket) => {
   client.query(`SELECT * FROM  contacts`, (error, response)=> {
     console.log(response.rows);
     socket.emit('receives_contact', response.rows)
   })
-}); */
+});
 
 
 io.on('connection', (socket) => {

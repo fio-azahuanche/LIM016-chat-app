@@ -19,10 +19,15 @@ function Login() {
             
             socket.on("receive_token", (data) => {
                 console.log(data);
-                sessionStorage.setItem('name_user', data.userData.name_user )
-                sessionStorage.setItem('email_user', data.userData.email_user )                
+                sessionStorage.setItem('name_user', data.userData.name_user );
+                sessionStorage.setItem('email_user', data.userData.email_user ); 
+                sessionStorage.setItem('id_user', data.userData.id_user );                
             })
-            navigate('/contacts');
+            socket.on("receives_contacts", (data) => {
+                console.log(data);
+                sessionStorage.setItem('contactos', JSON.stringify(data) );              
+            })
+            navigate('/chat-contact');
         }
         
     }

@@ -1,17 +1,10 @@
-import {createContext, useState, useEffect, useContext} from 'react';
+import React,{useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import Canal from './Canal';
 import io from 'socket.io-client';
 import '../App.css';
 const socket=io.connect("http://localhost:3001")
-/* const UserLogged = createContext({
-    name_user:null,
-    email_user:null,
-    id_user:null,
-    password_user:null,
-});
-
-const useUser = () => useContext(UserLogged); */
+const userLoggued = React.createContext({});
 
 function Login() {
     const navigate = useNavigate();
@@ -78,7 +71,7 @@ function Login() {
             </div>
             </div>
              ) : (
-                 <Canal/>
+                 <div></div>
                 )}
         </section>
        

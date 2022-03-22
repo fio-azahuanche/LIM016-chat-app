@@ -21,7 +21,6 @@ return (
             {/* <img src={require('../assets/Vector1.png')} alt="" className="corner-one" /> */}
         {!showChat ? (
             <div className="joinChatContainer">
-            <h2 className="mb-5">TalkTech</h2>
             <input
                 className="form-control inputLogin "
                 type="text"

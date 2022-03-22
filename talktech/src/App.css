@@ -83,12 +83,13 @@ body {
         font-family: 'Raleway', sans-serif;
         color: #212121;
         display: grid;
-        place-items: center;
         }
     .joinChatContainer {
         display: flex;
         flex-direction: column;
         text-align: center;
+        padding: 50px;
+        padding-top: 178px;
     }
 /*     .joinChatContainer h3 {
         font-size:60px;
@@ -100,6 +101,8 @@ body {
     .chat-window {
         width: 300px;
         height: 420px;
+        margin: auto;
+        margin-top: 100px;
     }
     .chat-window p {
         margin: 0;
@@ -291,6 +294,14 @@ body {
         opacity: 0.8;
         width: 100%;
         height: 100vh;
+        padding: 30px;
+        font-family: 'Arial', sans-serif;
+    }
+    .divContacts {
+        background-color: rgba(255, 255, 255, 0.7);
+        width: 100%;
+        height: 78vh;
+        border-radius: 40px;
     }
     .paddingNav {
         padding-left: 20px !important;
@@ -302,6 +313,11 @@ body {
         color: white;
         font-size: 18px;
     }
+    .nav-link:focus, .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+        color: white;
+        border-radius: 20px;
+    }
     .navbarChat {
         display: flex;
         flex-direction: row;
@@ -311,7 +327,9 @@ body {
         justify-content: space-evenly;
     }
     .text-chat{
-        color: #801e54;
+        color: #0D1C3C;
+        /* text-shadow: 1px 1px 1px #bbb6b9; */
+        font-size: 18px;
     }
     .bg-navBar{
         background-color: rgba(255, 255, 255, 0.8);
@@ -335,6 +353,10 @@ body {
         align-items: center;
         justify-content: center;
         margin-top: 50%;
+    }
+    a{
+        text-decoration: none;
+        color: white;
     }
 
     /* Profile*/

@@ -1,8 +1,14 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react'
+import { NavLink, useNavigate } from 'react-router-dom';
+import io from 'socket.io-client';
+
+const socket = io.connect("http://localhost:3001")
 
 function NavBar() {
-    const navigate = useNavigate();
+  const [prueba, setPrueba] = useState([]);
+  const [email, setEmail] = useState("");
+
+  const navigate = useNavigate();
   function addContactModal(){
     const idModal = document.getElementById('miModal');
     idModal.setAttribute('class', 'show-modal');
@@ -16,9 +22,21 @@ function NavBar() {
   const routerProfile = ()=>{
     navigate('/profile');
   }
+  const routerCanal = ()=>{
+    navigate('/canal');
+  }
+  const addNewContact = () => {
+    const idUser =sessionStorage.getItem('id_user')
+    const userEmail = { email , idUser  } 
+    socket.emit("add_contact", userEmail);
+    socket.on("receives_contact1", (data) => {
+      console.log('dataaa',data);
+      sessionStorage.setItem('data', JSON.stringify(data));
+    })
+  }
 
   return (
-      
+    <>
     <nav class="navbar navbar-expand-lg navbar-dark bg-pink">
           <img src={require('../assets/logo_talktech.png')} alt="" className='img-talktech'/>
             <a className="navbar-brand paddingNav" href="#">TalkTech</a>
@@ -35,17 +53,17 @@ function NavBar() {
         <a className="nav-link paddingNav" onClick={addContactModal}>Agregar Contacto</a>
         <div id="miModal" className="modal-success">    
         <div  className="modal-contact">
-          <input type="text" className='form-control' placeholder='Ingrese correo'/>
+          <input type="email" className='form-control' placeholder='Ingrese correo' onChange={(e) => { setEmail(e.target.value); }} value={email}/>
           <div className='d-flex'>
             <button className='btn btn-secondary m-3' onClick={closeModal} >Cerrar</button>
-            <button className='btn btn-success m-3' onClick={closeModal} >Añadir</button>
+            <button className='btn btn-success m-3' onClick={addNewContact} >Añadir</button>
           </div>
           
         </div>
       </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link paddingNav" href="#">Crear Canal</a>
+        <a class="nav-link paddingNav" href="#" onClick={routerCanal}>Crear Canal</a>
       </li>
       <li class="nav-item">
         <a class="nav-link paddingNav" href="#">Cerrar Sesión</a>
@@ -53,6 +71,21 @@ function NavBar() {
     </ul>
   </div>
 </nav>
+<nav class=" navbar-expand-lg navbar-dark pb-2 bg-pink">
+  <div class="container-fluid">
+    <div class="" id="navbarNav">
+      <ul class="navbarChat ">
+      <li class="nav-item">
+          <NavLink className="style-none active" aria-current="page" to="/chat-contact"><a class="nav-link text-white style-none" href="">Chats</a></NavLink>
+        </li>
+        <li class="nav-item">
+          <NavLink className="style-none" to="/contacts"><a class="nav-link text-white style-none" href="">Contactos</a></NavLink>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+</>
   )
 }
 

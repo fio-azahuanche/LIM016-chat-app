@@ -34,17 +34,6 @@ const client = new Client({
 
 client.connect();
 
-/* 
-  * Intento de autenticación
- io.use((socket,next)=>{
-  const email=socket.handshake.auth.email;
-  if(!email){
-    return next(new Error("Invalid email"))
-  }
-  socket.email=email,
-  socket.userId=
-}) */
-
 // * Socket.io to Login
 io.on('connection', (socket) => {
   console.log('usuario conectado', socket.id);
@@ -81,24 +70,6 @@ io.on('connection', (socket) => {
       }
     );
   });
-  /*  client.query(`SELECT id_user, email_user, password_user FROM  users WHERE '${data.email}'= email_user and '${data.password}'= password_user`, (err, res)=>{
-      if (err) {
-          console.error(err);
-      }else{
-        const userData=res.rows[0];
-          jwt.sign({userData},'secretkey',(error,token)=>{
-           const tokenUser=({
-            token,
-            userData
-          })
-          // console.log(tokenUser);
-          
-        });
-         //  socket.to(data.token).emit('receive_login', data);
-       
-      }
-      client.end();
-    }) */
 });
 
 function validate(email) {
@@ -130,15 +101,6 @@ io.on('connection', (socket) => {
           await sendEmail(data.email, 'Esto es una prueba', template);
 
           client.query(`INSERT INTO users (id_user, email_user, password_user, name_user, verified_user) VALUES ('${socket.id}','${data.email}', '${data.password}' ,'${data.name}', false)`
-          /** 
-           * TODO: preguntar para que sirve esto
-            , (error, resp)=>{
-            if (error) {
-                console.error(error);
-                return;
-            }
-            client.end();
-            } */
           );
           socket.emit('receives_duplicate', 'Registro correcto');
         } else {
@@ -168,20 +130,18 @@ io.on('connection', (socket) => {
             console.log(response.rows[0]);
             socket.emit('receives_contact1', response.rows[0])
           })
-          // socket.emit('receives_contact', res.rows[0])
-          // console.log(res.rows[0]);
         }
       }
     )
   });
 });
 
-/* io.on('connection', (socket) => {
+io.on('connection', (socket) => {
   client.query(`SELECT * FROM  contacts`, (error, response)=> {
     console.log(response.rows);
     socket.emit('receives_contact', response.rows)
   })
-}); */
+});
 
 
 io.on('connection', (socket) => {
@@ -200,40 +160,4 @@ io.on('connection', (socket) => {
 server.listen(3001, () => {
   console.log(`Servidor inicializado`);
 });
-// eslint-disable-next-line no-unused-vars
-/* client.query(`insert into usuarios (id, nombre) values ( ${socket.id}, 'Will' )`, (err, res)=>{
-        if (err) {
-            console.error(err);
-            return;
-        }
-        console.log('Data insert successful');
-        client.end();
-    }) */
 
-/*     pgadmin:
-    image: 'dpage/pgadmin4:5.6'
-    depends_on:
-      - postgres
-    ports:
-      - 15432:80
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@pgadmin.com
-      PGADMIN_DEFAULT_PASSWORD: pgadmin
-      PGADMIN_LISTEN_PORT: 80
-    volumes:
-      - pgadmin:/var/lib/pgadmin
-volumes:
-  postgres:
-  pgadmin:
- */
-
-/* 
-client.query('Select * from users', (err,res)=>{
-  if(!err){
-    console.log(res.rows);
-  }else{
-    console.log(err.message);
-  }
-   client.end();
-})
- */

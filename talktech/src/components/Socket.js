@@ -1,5 +1,5 @@
-import io from 'socket.io-client';
+/* import io from 'socket.io-client';
 
 let socket = io('//localhost:5000/');
 
-export default socket;
+export default socket; */

@@ -29,7 +29,7 @@ function SignUp() {
       setError(true);
       setSubmitted(false);
     } else {
-      const userData = { email, password, name };
+      const userData = { email, password, name , verified: false, status: 'disconnect' };
       axios
         .post(url, userData)
         .then(function (res) {

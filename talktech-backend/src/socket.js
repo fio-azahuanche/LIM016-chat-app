@@ -72,16 +72,21 @@ io.on('connection', (socket) => {
   });
 });
 
-function validate(email) {
+/* function validate(email) {
   io.on('connection', () => {
-   client.query(`UPDATE users SET verified_user = true WHERE email_user='${email}'`)
-  });
+     // socket.on('signup_user',()=>{
+      client.query(`UPDATE users SET verified_user = true WHERE email_user='${email}'`)
+     // client.end();
+   // })
+   
+  })
 } 
-
-const getTemplate = (name,email) => {
+ */
+const getTemplate = (name) => {
+  
     return `
       Mensajeeeee para ${name}
-      <a href="http://localhost:3000"><button onclick="${validate(email)}">Confirmar</button></a>
+      <a href="http://localhost:3000"><button>Confirmar</button></a>
       `
 }
 
@@ -103,13 +108,16 @@ io.on('connection', (socket) => {
           client.query(`INSERT INTO users (id_user, email_user, password_user, name_user, verified_user) VALUES ('${socket.id}','${data.email}', '${data.password}' ,'${data.name}', false)`
           );
           socket.emit('receives_duplicate', 'Registro correcto');
+          
         } else {
           socket.emit('receives_duplicate', 'Cuenta existente');
           console.log('fuera del INSERT',err);
         }
+       // client.end();
       }
     );
   });
+  
 });
 
 // * Socket.io to Add new contact

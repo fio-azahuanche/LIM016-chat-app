@@ -1,11 +1,12 @@
 import { Routes, Route,BrowserRouter } from "react-router-dom";
 import Login from '../components/Login';
 import SignUp from "../components/SignUp";
+import { createContext, useContext } from "react";
 
 import DashboardRoutes from "./DashboardRoutes";
 
 function AppRouter() {
-
+ 
     return (
    
     <BrowserRouter>

@@ -4,6 +4,7 @@ import SignUp from "../components/SignUp";
 import { createContext, useContext } from "react";
 
 import DashboardRoutes from "./DashboardRoutes";
+import Welcome from "../components/Welcome";
 
 function AppRouter() {
  
@@ -13,6 +14,7 @@ function AppRouter() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/userconfirm/:confirmationCode" element={<Welcome/>} />
       <Route path="/*" element={<DashboardRoutes/>}/>
     </Routes>
   </BrowserRouter>

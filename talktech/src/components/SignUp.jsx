@@ -39,7 +39,7 @@ function SignUp() {
             console.log(data);
           }else{
             const idModal = document.getElementById('miModal');
-            idModal.setAttribute('class', 'show');
+            idModal.setAttribute('class', 'show-modal');
             setSubmitted(true);
             setError(false);
             console.log(data);
@@ -52,7 +52,7 @@ function SignUp() {
 
     const closeModal = () => {
       const idModal = document.getElementById('miModal');
-      idModal.setAttribute('class', 'modal');
+      idModal.setAttribute('class', 'modal-success');
       navigate('/');
     }
 
@@ -60,7 +60,7 @@ function SignUp() {
     const successMessage = () => {
 
     return (
-      <div id="miModal" className="modal">    
+      <div id="miModal" className="modal-success">    
         <div  className="modal-contenido">
           <img src={require('../assets/check.gif')} alt="" className='gif' />
           <h5 className="h2Modal">Registro éxitoso!</h5>

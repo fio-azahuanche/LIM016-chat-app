@@ -1,8 +1,9 @@
 import { Routes, Route,BrowserRouter } from "react-router-dom";
 import Login from '../components/Login';
-import Canal from '../components/Canal';
 import SignUp from "../components/SignUp";
 import { createContext, useContext } from "react";
+
+import DashboardRoutes from "./DashboardRoutes";
 
 function AppRouter() {
  
@@ -12,7 +13,11 @@ function AppRouter() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
+<<<<<<< HEAD
       <Route path="/canal" element={<Canal />}/>
+=======
+      <Route path="/*" element={<DashboardRoutes/>}/>
+>>>>>>> 2236f08413c2f53c6a862aa032eebb966315aeaf
     </Routes>
   </BrowserRouter>
  

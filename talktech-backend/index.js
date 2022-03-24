@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-console */
+const { v4 } = require('uuid');
 const { Server } = require('socket.io');
 
 const { Client } = require('pg');
@@ -47,25 +48,26 @@ io.on('connection', (socket) => {
           console.log(err);
         } else {
           const userData = res.rows[0];
-         
-            if(userData.verified_user === true) {
-              jwt.sign(
-                { email: userData.email_user, password: userData.password_user },
-                'secretkey',
-                (error, token) => {
-                  const tokenUser = {
-                    token,
-                    userData,
-                  };
-                  console.log(token, tokenUser);
-                  socket.emit('receive_token', tokenUser);
-                }
-              );
-            } else {
-              console.log('msg_error', 'Por favor, confirme correo electrónico.');
-            }   
-          
-          
+          if(userData.verified_user === true) {
+            jwt.sign(
+              { email: userData.email_user, password: userData.password_user },
+              'secretkey',
+              (error, token) => {
+                const tokenUser = {
+                  token,
+                  userData,
+                };
+                console.log(token, tokenUser);
+                socket.emit('receive_token', tokenUser);
+                client.query(`SELECT * FROM  contacts`, (er, response)=> {
+                  console.log(response.rows);
+                  socket.emit('receives_contacts', response.rows)
+                })
+              }
+            );
+          } else {
+            console.log('msg_error', 'Por favor, confirme correo electrónico.');
+          }          
         }
       }
     );
@@ -95,8 +97,10 @@ io.on('connection', (socket) => {
   socket.on('signup_user', (data) => {
     client.query( `SELECT * FROM  users WHERE email_user = '${data.email}'`,
       async (err, res) => {
-        const userData = res.rows[0];
-        if (userData === undefined) {
+        const userData = res.rows;
+        console.log('antes del if', userData.length);
+        if (userData.length === 0) {
+          console.log('dentro del if', userData.length);
           // * Obtener un template
           const template = getTemplate(data.name, data.email);
 
@@ -126,6 +130,40 @@ io.on('connection', (socket) => {
   });
   
 });
+
+// * Socket.io to Add new contact
+io.on('connection', (socket) => {
+  socket.on('add_contact', (data) => {
+    console.log('Esto es dataaaaaa',data);
+    client.query(
+      `SELECT * FROM  users WHERE email_user = '${data.email}'`,
+      (err, res) => {
+        if (err) {
+          console.log(err);
+        } else {
+          const dataContact = res.rows[0];
+          const idContact = v4();
+          client.query(`INSERT INTO contacts (id_contact, email_contact, name_contact, id_user) VALUES ('${idContact}','${dataContact.email_user}', '${dataContact.name_user}', '${data.idUser}' )`)
+          console.log(data.email);
+          client.query(`SELECT * FROM  contacts WHERE email_contact='${data.email}'`, (error, response)=> {
+            console.log(response.rows[0]);
+            socket.emit('receives_contact1', response.rows[0])
+          })
+          // socket.emit('receives_contact', res.rows[0])
+          // console.log(res.rows[0]);
+        }
+      }
+    )
+  });
+});
+
+/* io.on('connection', (socket) => {
+  client.query(`SELECT * FROM  contacts`, (error, response)=> {
+    console.log(response.rows);
+    socket.emit('receives_contact', response.rows)
+  })
+}); */
+
 
 io.on('connection', (socket) => {
   console.log('usuario conectado', socket.id);

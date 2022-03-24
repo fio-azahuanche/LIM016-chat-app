@@ -83,12 +83,13 @@ body {
         font-family: 'Raleway', sans-serif;
         color: #212121;
         display: grid;
-        place-items: center;
         }
     .joinChatContainer {
         display: flex;
         flex-direction: column;
         text-align: center;
+        padding: 50px;
+        padding-top: 178px;
     }
 /*     .joinChatContainer h3 {
         font-size:60px;
@@ -100,6 +101,8 @@ body {
     .chat-window {
         width: 300px;
         height: 420px;
+        margin: auto;
+        margin-top: 100px;
     }
     .chat-window p {
         margin: 0;
@@ -258,7 +261,7 @@ body {
         margin-top: 50%;
     }
     
-    .modal {
+    .modal-success {
         background-color: rgba(0, 0, 0, 0.8);
         position: fixed;
         top: 0;
@@ -271,7 +274,7 @@ body {
         z-index: -2;
     }
     
-    .show {
+    .show-modal {
         pointer-events: auto;
         background-color: rgba(0, 0, 0, 0.60);
         position: fixed;
@@ -283,4 +286,111 @@ body {
         pointer-events: none;
         z-index: 100;
     }
+    
+    /* Contactos */
+    .sectionContact {
+        border-radius: 40px 40px 0 0;
+        background-image: url('./assets/fondo3.jpg');
+        opacity: 0.8;
+        width: 100%;
+        height: 100vh;
+        padding: 30px;
+        font-family: 'Arial', sans-serif;
+    }
+    .divContacts {
+        background-color: rgba(255, 255, 255, 0.7);
+        width: 100%;
+        height: 78vh;
+        border-radius: 40px;
+    }
+    .paddingNav {
+        padding-left: 20px !important;
+    }
+    .bg-pink {
+        background-color: #D885A3;
+    }
+    .menu{
+        color: white;
+        font-size: 18px;
+    }
+    .nav-link:focus, .nav-link:hover {
+        background-color: rgba(255, 255, 255, 0.3);
+        color: white;
+        border-radius: 20px;
+    }
+    .navbarChat {
+        display: flex;
+        flex-direction: row;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+        justify-content: space-evenly;
+    }
+    .text-chat{
+        color: #0D1C3C;
+        /* text-shadow: 1px 1px 1px #bbb6b9; */
+        font-size: 18px;
+    }
+    .bg-navBar{
+        background-color: rgba(255, 255, 255, 0.8);
+    }
+    .img-talktech{
+        padding-left: 10px;
+    }
+    .modal-contact {
+        background-color: white;
+        width: 300px;
+        height: 120px;
+        padding: 15px 20px 0px 20px;
+        margin: 20% auto;
+        position: relative;
+        opacity: 1;
+        pointer-events: auto;
+        border-radius: 15px;
+        z-index: -1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50%;
+    }
+    a{
+        text-decoration: none;
+        color: white;
+    }
+
+    /* Profile*/
+    .imgUser {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        background-color: white;
+        border-radius: 50%;
+        margin: auto;
+    }
+
+    .inputImgUser {
+        position: absolute;
+        left: 0;
+        bottom: 0;
+    }
+    #fichero{
+        display: none;
+      }
+      
+      .circle{
+        display: inline-block;
+        background-color: #D885A3;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     

@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
     pass: mail.pass, // generated ethereal password
   },
 });
-const sendEmail = async (email, name, confirmationCode) => {
+const sendConfirmationEmail = async (email, name, confirmationCode) => {
   try {
     await transporter.sendMail({
       from: `TalkTech <${mail.user}>`, // sender address
@@ -35,5 +35,5 @@ const sendEmail = async (email, name, confirmationCode) => {
 };
 
 module.exports = {
-  sendEmail,
+  sendConfirmationEmail,
 };

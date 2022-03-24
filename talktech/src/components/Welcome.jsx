@@ -3,17 +3,17 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const Welcome = (props) => {
-        console.log(useLocation().pathname);
-        const path=useLocation().pathname
-    /* if (props.match.path === "/userconfirm/:confirmationCode") {
-console.log(props.match.path);
-        axios.get("http://localhost:3002/users/confirm/" + props.match.params.confirmationCode).then((response) => {
+    console.log(useLocation().pathname);
+    const path = useLocation().pathname;
+    const cutPath = path.slice(13)
+        console.log('esto es cutPath', cutPath);
+        axios.get("http://localhost:3002/users/confirm/" + cutPath).then((response) => {
             console.log(response);
             return response.data;
           });
-    } */
+    
     useEffect(()=>{
-        console.log(path);
+        console.log(path.toString());
     },[])
   
     return (

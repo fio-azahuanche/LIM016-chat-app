@@ -4,7 +4,7 @@
 const { Client } = require('pg');
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { sendEmail } = require('../../config/mail.config');
+const { sendConfirmationEmail } = require('../../config/mail.config');
 
 
 const client = new Client({
@@ -46,6 +46,7 @@ const getTemplate = (name, tokenConfirm) => {
 
 const createUsers = async (req, res) => {
     const { email, password, name, verified, status } = req.body;
+    
     const token = jwt.sign({email}, 'secret_key')
     const duplicate_user = await client.query(
       'SELECT * FROM users WHERE email_user = $1',
@@ -67,13 +68,15 @@ const createUsers = async (req, res) => {
             password,
             name,
             verified,
+            status,
+            token
           },
         },
       });/* 
       const template = getTemplate(name, token); */
   
       //* Enviar email
-      await sendEmail(email, name, token);
+      await sendConfirmationEmail(email, name, token);
       
     } else {
       res.status(500).json({

@@ -1,9 +1,11 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable camelcase */
-const { sendEmail } = require('../config/mail.config');
 
 const { Client } = require('pg');
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
+const { sendEmail } = require('../../config/mail.config');
+
 
 const client = new Client({
   host: 'localhost',
@@ -33,17 +35,18 @@ const loginUser = async (req, res) => {
 
 };
 
-
-const getTemplate = (name, email) => {
-    console.log('entro getTemplate',name,email);
+/* 
+const getTemplate = (name, tokenConfirm) => {
+    console.log('entro getTemplate',name,tokenConfirm);
     return `
       Confirma para continuar, ${name} !
-      <a href="http://localhost:3000"><button>Confirmar</button></a>
+      <a href="http://localhost:3000/userconfirm/${tokenConfirm}"><button>Confirmar</button></a>
       `;
-  };
+  }; */
 
 const createUsers = async (req, res) => {
     const { email, password, name, verified, status } = req.body;
+    const token = jwt.sign({email}, 'secret_key')
     const duplicate_user = await client.query(
       'SELECT * FROM users WHERE email_user = $1',
       [email]
@@ -51,13 +54,9 @@ const createUsers = async (req, res) => {
     const userData = duplicate_user.rows;
     console.log(name, email);
     if (userData.length === 0) {
-      const template = getTemplate(name, email);
-  
-      //* Enviar email
-      await sendEmail(email, 'Bienvenido a talktech', template);
-      await client.query(
-        `INSERT INTO users (email_user, password_user, name_user, verified_user, status_user) VALUES ($1, $2, $3, $4, $5)`,
-        [email, password, name, verified, status]
+     await client.query(
+        `INSERT INTO users (email_user, password_user, name_user, verified_user, status_user,tokenup_user) VALUES ($1, $2, $3, $4, $5,$6)`,
+        [email, bcrypt.hashSync(password,8), name, verified, status, token]
       );
       res.status(200).json({
         message: 'user added successful',
@@ -70,9 +69,14 @@ const createUsers = async (req, res) => {
             verified,
           },
         },
-      });
+      });/* 
+      const template = getTemplate(name, token); */
+  
+      //* Enviar email
+      await sendEmail(email, name, token);
+      
     } else {
-      res.status(202).json({
+      res.status(500).json({
         message: 'email duplicated',
       });
     }

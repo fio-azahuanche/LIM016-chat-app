@@ -71,6 +71,10 @@ function SignUp() {
     }
   };
 
+  const sendToken = () => {
+    axios.get()
+  }
+
   const closeModal = () => {
     const idModal = document.getElementById("miModal");
     idModal.setAttribute("class", "modal-success");

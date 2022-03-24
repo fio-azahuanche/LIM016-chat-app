@@ -26,7 +26,7 @@ const sendEmail = async (email, name, confirmationCode) => {
       html: `<h1>TalkTech</h1>
       <h2>Hola ${name}</h2>
       <p>Gracias por resgitrarte. Por favor confima tu correo haciendo click al siguiente link:</p>
-      <a href=http://localhost:3000/confirm/${confirmationCode}> Click Aquí</a>
+      <a href=http://localhost:3000/userconfirm/${confirmationCode}> Click Aquí</a>
       </div>`,
     });
   } catch (error) {

@@ -17,14 +17,17 @@ const transporter = nodemailer.createTransport({
     pass: mail.pass, // generated ethereal password
   },
 });
-const sendEmail = async (email, subject, html) => {
+const sendEmail = async (email, name, confirmationCode) => {
   try {
     await transporter.sendMail({
       from: `TalkTech <${mail.user}>`, // sender address
       to: email, // list of receivers
-      subject,
-      text: 'Holis, veamos si funciona', // plain text body
-      html,
+      subject: 'Confirmación de cuenta',
+      html: `<h1>TalkTech</h1>
+      <h2>Hola ${name}</h2>
+      <p>Gracias por resgitrarte. Por favor confima tu correo haciendo click al siguiente link:</p>
+      <a href=http://localhost:3000/confirm/${confirmationCode}> Click Aquí</a>
+      </div>`,
     });
   } catch (error) {
     console.log('Algo no va bien con el email', error);

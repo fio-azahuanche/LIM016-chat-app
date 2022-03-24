@@ -14,7 +14,7 @@ const client = new Client({
 client.connect();
 
 const updateUserValidate = async (req, res) => {
-  const email = req.params.email_user;
+  const email = req.params.token_confirm;
   // const emailUser = {email_user:email};
   await client.query(
     `UPDATE users SET verified_user=true WHERE email_user=$1`,
@@ -23,15 +23,12 @@ const updateUserValidate = async (req, res) => {
   res.json('Actualiza');
 };
 
-/* const validate = async (email) => {
-  await updateUserValidate(email)
-}; */
 
 const getTemplate = (name, email) => {
   console.log('entro getTemplate',name,email);
   return `
     Confirma para continuar, ${name} !
-    <a href="http://localhost:3002/users/email/${email}"><button>Confirmar</button></a>
+    <a href="http://localhost:3000"><button>Confirmar</button></a>
     `;
 };
 

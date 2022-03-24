@@ -13,11 +13,7 @@ function AppRouter() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/signup" element={<SignUp />} />
-<<<<<<< HEAD
-      <Route path="/canal" element={<Canal />}/>
-=======
       <Route path="/*" element={<DashboardRoutes/>}/>
->>>>>>> 2236f08413c2f53c6a862aa032eebb966315aeaf
     </Routes>
   </BrowserRouter>
  

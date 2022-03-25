@@ -28,11 +28,11 @@ function NavBar() {
   const addNewContact = () => {
     const idUser =sessionStorage.getItem('id_user')
     const userEmail = { email , idUser  } 
-    socket.emit("add_contact", userEmail);
+    /* socket.emit("add_contact", userEmail);
     socket.on("receives_contact1", (data) => {
       console.log('dataaa',data);
       sessionStorage.setItem('data', JSON.stringify(data));
-    })
+    }) */
   }
 
   return (

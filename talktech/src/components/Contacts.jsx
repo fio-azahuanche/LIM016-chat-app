@@ -1,25 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom';
 import io from 'socket.io-client';
-
+import axios from "axios";
 
 function Contacts() {
+
+  const idUser = sessionStorage.getItem('id_user');
+  const url2 = `http://localhost:3002/contacts/${idUser}`
+
   const [listContacts, setlistContacts] = useState([]);
-  
-  const prueba = async () => {
-    const socket=io.connect("http://localhost:3001");
-    await socket.on("receives_contact", (data) => {
-      console.log('dataaa',data);
-      setlistContacts((list)=>{
-        return [...list,...data]
-      })
+ 
+  const getContacts = ()=>{
+    axios.get(url2)
+    .then(function (res) {
+      console.log('esta es la res',res );
     })
+    .catch(function (err) {
+      console.log("este es el error ", err);
+    });
   }
   useEffect(()=>{
-    prueba();
-    console.log('Se montó contacts');
+    getContacts();
   }, [])
-  
+
   return (
    
         <div className='pl-3 bg-pink'>

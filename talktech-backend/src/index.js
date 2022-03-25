@@ -10,5 +10,7 @@ app.use(cors());
 // routes
 app.use(require('./routes/index'));
 
+app.use(require('./routes/contacts'));
+
 app.listen(3002);
 console.log('Server on port 3002');

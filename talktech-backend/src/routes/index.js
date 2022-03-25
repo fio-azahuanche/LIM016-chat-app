@@ -20,4 +20,5 @@ router.get('/users/:id_user', getUsersById);
 router.delete('/users/:id_user', deleteUser);
 router.put('/users/:id_user', updateUser);
 router.get('/users/confirm/:token_confirm', updateUserValidate); // redireccion por utilizar ancla
+
 module.exports = router;

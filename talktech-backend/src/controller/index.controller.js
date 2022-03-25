@@ -23,8 +23,6 @@ const updateUserValidate = async (req, res) => {
   res.json('Actualiza');
 };
 
-
-
 const getUsers = async (req, res) => {
   const response = await client.query('SELECT * FROM users');
   res.status(200).json(response.rows);
@@ -38,8 +36,6 @@ const getUsersById = async (req, res) => {
   );
   res.json(response.rows);
 };
-
-
 
 const deleteUser = async (req, res) => {
   const id = req.params.id_user;

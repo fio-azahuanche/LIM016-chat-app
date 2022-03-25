@@ -17,28 +17,20 @@ const client = new Client({
 
 client.connect();
 
-const isVerifiedPassword =async (password, passwordReceived) => {
-  let respuestaBycrypt;
-  const respuesta= await bcrypt.compare(password, passwordReceived, function (err, result) {
+const isVerifiedPassword = (password, passwordReceived) => {
+  return bcrypt.compare(password, passwordReceived) 
+    /* function (err, result) {
     if (result === false) {
-      
-      console.log('no son iguale by bcrypt',respuestaBycrypt);
-        respuestaBycrypt= false;
- return result
-
-    } /* 
-        let payload = {subject: user._id};
-        let token = jwt.sign(payload, 'secretKey'); 
-        console.log('son iguale by bcrypt');
-        res.status(200).send({message:'iguales'}); */
-        respuestaBycrypt= true
-        console.log('son iguales by bcrypt',respuestaBycrypt);
+      respuestaBycrypt= false;
       return result
-    
-});
-console.log('respuesta',respuesta);
-console.log('log de respuestBycrypt en la funcion',respuestaBycrypt);
-return respuestaBycrypt;
+
+    } 
+    let payload = {subject: user._id};
+    let token = jwt.sign(payload, 'secretKey'); 
+    res.status(200).send({message:'iguales'});
+    respuestaBycrypt= true
+    console.log('son iguales by bcrypt',respuestaBycrypt);
+    return result */
 }
 
 
@@ -52,18 +44,19 @@ const loginUser = async (req, res) => {
     console.log('este es userData del login',userData);
      
 
-     const resultCompare =isVerifiedPassword(password,userData.password_user);
+     const resultCompare = await isVerifiedPassword(password,userData.password_user);
      console.log('este es el resutado de passwords',resultCompare);
-    /* if (userData.verified_user === true && resultCompare===true  && userData.email_user===email){
+    if (userData.verified_user === true && resultCompare===true  && userData.email_user===email){
         console.log('entro al if del login');
         jwt.sign({ email, password },'secretkey',
             (error, token) => {
-              const tokenLogged = {
+              const dataUser = {
                 token,
-                email,
-                password
+                email: userData.email_user,
+                name: userData.name_user,
+                id: userData.id_user
               }
-              res.status(200).send({message:'receive_token', tokenLogged});
+              res.status(200).json({message:'receive_token', dataUser});
               client.query('UPDATE users SET status_user=$1 WHERE email_user=$2',
               ['connect',email])
             });
@@ -71,8 +64,8 @@ const loginUser = async (req, res) => {
 
     } else{
       console.log('entro al else de login');
-        res.status(401).send({message: "Pending Account. Please Verify Your Email!",});
-    } */
+        res.status(401).json({message: "Pending Account. Please Verify Your Email!",});
+    }
 
 };
 

@@ -17,21 +17,62 @@ const client = new Client({
 
 client.connect();
 
+const isVerifiedPassword =async (password, passwordReceived) => {
+  let respuestaBycrypt;
+  const respuesta= await bcrypt.compare(password, passwordReceived, function (err, result) {
+    if (result === false) {
+      
+      console.log('no son iguale by bcrypt',respuestaBycrypt);
+        respuestaBycrypt= false;
+ return result
+
+    } /* 
+        let payload = {subject: user._id};
+        let token = jwt.sign(payload, 'secretKey'); 
+        console.log('son iguale by bcrypt');
+        res.status(200).send({message:'iguales'}); */
+        respuestaBycrypt= true
+        console.log('son iguales by bcrypt',respuestaBycrypt);
+      return result
+    
+});
+console.log('respuesta',respuesta);
+console.log('log de respuestBycrypt en la funcion',respuestaBycrypt);
+return respuestaBycrypt;
+}
+
+
 const loginUser = async (req, res) => {
-    const { email, password, verified } = req.body;
-    if (verified === true){
+    const { email, password } = req.body;
+    const userLogged = await client.query(
+      'SELECT * FROM users WHERE email_user = $1',
+      [email]
+    );
+     const userData = userLogged.rows[0];
+    console.log('este es userData del login',userData);
+     
+
+     const resultCompare =isVerifiedPassword(password,userData.password_user);
+     console.log('este es el resutado de passwords',resultCompare);
+    /* if (userData.verified_user === true && resultCompare===true  && userData.email_user===email){
+        console.log('entro al if del login');
         jwt.sign({ email, password },'secretkey',
             (error, token) => {
-              const tokenUser = {
+              const tokenLogged = {
                 token,
                 email,
                 password
               }
-              res.send('receive_token', tokenUser);
+              res.status(200).send({message:'receive_token', tokenLogged});
+              client.query('UPDATE users SET status_user=$1 WHERE email_user=$2',
+              ['connect',email])
             });
+
+
     } else{
+      console.log('entro al else de login');
         res.status(401).send({message: "Pending Account. Please Verify Your Email!",});
-    }
+    } */
 
 };
 

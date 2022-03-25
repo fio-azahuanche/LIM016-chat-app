@@ -7,6 +7,7 @@ const socket = io.connect("http://localhost:3001");
 const userLoggued = React.createContext({});
 
 const url = "http://localhost:3002/users/login";
+
 function Login() {
   const navigate = useNavigate();
 
@@ -20,18 +21,18 @@ function Login() {
       axios
         .post(url, userData)
         .then(function (res) {
-          /* const response = res.status;
+          const response = res.status;
           if (response === 200) {
-            sessionStorage.setItem('name_user', data.userData.name_user );
-            sessionStorage.setItem('email_user', data.userData.email_user ); 
-            sessionStorage.setItem('id_user', data.userData.id_user ); 
-          } else {
-            setSubmitted(false);
-            setError(true);
-          } */
+            sessionStorage.setItem('name_user', res.data.dataUser.name );
+            sessionStorage.setItem('email_user', res.data.dataUser.email ); 
+            sessionStorage.setItem('id_user', res.data.dataUser.id );
+            navigate("/chat-contact"); 
+          } 
           console.log('esta es la res',res );
         })
         .catch(function (err) {
+          // ver los errores contraseña incorrecta, no confirmo email, no registrado
+          // que se traiga del login del backend
           console.log("este es el error ", err);
         });
       /* socket.emit("login_user", userData);
@@ -46,10 +47,10 @@ function Login() {
                 console.log(data);
                 sessionStorage.setItem('contactos', JSON.stringify(data) );              
             }) */
-      //navigate("/chat-contact");
     }
   };
 
+  
   return (
     <section className="container sectionLogin">
       <div>

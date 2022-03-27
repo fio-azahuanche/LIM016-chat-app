@@ -26,3 +26,24 @@ CONSTRAINT fk_canal FOREIGN KEY (id_canal)
     REFERENCES canal (id_canal) MATCH SIMPLE
     ON UPDATE NO ACTION ON DELETE CASCADE
 );
+
+
+//----------------------esto es la idea para canal de las conexiones con socket y contact 
+create table canals(
+id_canal serial,
+integrantes integer ARRAY,
+CONSTRAINT pk_canals PRIMARY KEY (id_canal))
+
+
+create table contact(
+id_user_contact serial,
+id_user integer,
+id_contact integer,
+CONSTRAINT pk_user_contact PRIMARY KEY (id_user_contact),
+CONSTRAINT fk_user FOREIGN KEY (id_user)
+    REFERENCES users (id_user) MATCH SIMPLE
+    ON UPDATE NO ACTION ON DELETE CASCADE,
+CONSTRAINT fk_contact FOREIGN KEY (id_contact)
+    REFERENCES users (id_user) MATCH SIMPLE
+    ON UPDATE NO ACTION ON DELETE CASCADE
+)

@@ -152,7 +152,9 @@ io.on('connection', (socket) => {
 }); */
 
 
-io.on('connection', (socket) => {
+io.on('connection',async (socket) => {
+  const history=await client.query('select * from history');
+  console.log('aqui esta history',history.rows[0].message_history);
   console.log('usuario conectado', socket.id);
   socket.on('join_canal', (data) => {
     socket.join(data);
@@ -160,6 +162,7 @@ io.on('connection', (socket) => {
   });
   socket.on('send_message', (data) => {
     socket.to(data.canal).emit('receive_message', data);
+
   });
   socket.on('disconnect', () => {
     console.log('user desconectado', socket.id);

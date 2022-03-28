@@ -1,11 +1,12 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
-const socket = io.connect("http://localhost:3001")
+const url = "http://localhost:3002/contact"
 
 function NavBar() {
-  const [prueba, setPrueba] = useState([]);
+  const [prueba, setPrueba] = useState(false);
   const [email, setEmail] = useState("");
 
   const navigate = useNavigate();
@@ -27,7 +28,18 @@ function NavBar() {
   }
   const addNewContact = () => {
     const idUser =sessionStorage.getItem('id_user')
-    const userEmail = { email , idUser  } 
+    console.log(idUser);
+    const userEmail = { email_contact:email , id_user:idUser  } 
+    axios.post(url, userEmail).then((res)=>{
+      console.log(res);   
+      window.location.reload()
+
+    }).catch((res)=>{
+      console.log(res);
+      setPrueba(true)
+
+    })
+    console.log(userEmail);
     /* socket.emit("add_contact", userEmail);
     socket.on("receives_contact1", (data) => {
       console.log('dataaa',data);
@@ -53,7 +65,8 @@ function NavBar() {
         <a className="nav-link paddingNav" onClick={addContactModal}>Agregar Contacto</a>
         <div id="miModal" className="modal-success">    
         <div  className="modal-contact">
-          <input type="email" className='form-control' placeholder='Ingrese correo' onChange={(e) => { setEmail(e.target.value); }} value={email}/>
+          <input type="email" className='form-control' placeholder='Ingrese correo' onChange={(e) => { setEmail(e.target.value);setPrueba(false); }} value={email}/>
+          {(prueba===true)&&<span>Error encontrado</span>}
           <div className='d-flex'>
             <button className='btn btn-secondary m-3' onClick={closeModal} >Cerrar</button>
             <button className='btn btn-success m-3' onClick={addNewContact} >Añadir</button>

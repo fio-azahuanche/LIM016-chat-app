@@ -144,12 +144,12 @@ io.on('connection', (socket) => {
   });
 });
 
-io.on('connection', (socket) => {
+/* io.on('connection', (socket) => {
   client.query(`SELECT * FROM  contacts`, (error, response)=> {
     console.log(response.rows);
     socket.emit('receives_contact', response.rows)
   })
-});
+}); */
 
 
 io.on('connection', (socket) => {

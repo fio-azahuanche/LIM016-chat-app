@@ -31,7 +31,7 @@ CONSTRAINT fk_canal FOREIGN KEY (id_canal)
 //----------------------esto es la idea para canal de las conexiones con socket y contact 
 create table canals(
 id_canal serial,
-integrantes integer ARRAY,
+integrantes character varying,
 CONSTRAINT pk_canals PRIMARY KEY (id_canal))
 
 
@@ -44,6 +44,24 @@ CONSTRAINT fk_user FOREIGN KEY (id_user)
     REFERENCES users (id_user) MATCH SIMPLE
     ON UPDATE NO ACTION ON DELETE CASCADE,
 CONSTRAINT fk_contact FOREIGN KEY (id_contact)
+    REFERENCES users (id_user) MATCH SIMPLE
+    ON UPDATE NO ACTION ON DELETE CASCADE
+)
+
+//----------------------create History
+
+
+create table history (
+	id_history serial, 
+	id_canal integer, 
+	id_user integer, 
+	message_history character varying,
+	date_history timestamp without time zone,
+	CONSTRAINT pk_history PRIMARY KEY (id_history),
+	CONSTRAINT fk_canal FOREIGN KEY (id_canal)
+    REFERENCES canals (id_canal) MATCH SIMPLE
+    ON UPDATE NO ACTION ON DELETE CASCADE,
+	CONSTRAINT fk_user FOREIGN KEY (id_user)
     REFERENCES users (id_user) MATCH SIMPLE
     ON UPDATE NO ACTION ON DELETE CASCADE
 )

@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import ScrollToBottom from "react-scroll-to-bottom";
 import {v4 as uuid} from "uuid";
 
-function Chat({ socket, userName, canal }) {
+function Chat({ socket, canal ,setShowChat}) {
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
+    const userName=sessionStorage.getItem('name_user');
     const sendMessage = async () => {
         if (currentMessage !== "") {
             const messageData = {
-                id: uuid(),
+                id: sessionStorage.getItem('id_user'),
                 canal: canal,
                 author: userName,
                 message: currentMessage,
@@ -26,6 +27,7 @@ function Chat({ socket, userName, canal }) {
     }, [socket]);
     return (
         <div className="chat-window">
+            <i class='bx bx-arrow-back' onClick={()=>{setShowChat(false)}}></i>
             <div className="chat-header">
                 <p>TalkTech</p>
             </div>
@@ -34,7 +36,7 @@ function Chat({ socket, userName, canal }) {
                 {messageList.map((messageContent) => {
                     return (
                     <div className="message" key={messageContent.id}
-                        id={userName === messageContent.author ? "you" : "other"}
+                        id={userName === messageContent.author ? "other" : "you"}
                     >
                         <div>
                         <div className="message-content">

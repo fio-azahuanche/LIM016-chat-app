@@ -3,8 +3,6 @@
 
 const { Client } = require('pg');
 
-
-
 const client = new Client({
   host: 'localhost',
   user: 'postgres',
@@ -17,12 +15,17 @@ client.connect();
 
 const addContact = async (req, res) => {
   const {email_contact,id_user} =  req.body;
+  // existe el contacto como usuario de la aplicacion
   const contact_founded = await client.query('SELECT id_user FROM users WHERE email_user =$1',[email_contact]);
   if(contact_founded.rows.length!==0){
-    const id_contact = contact_founded.rows[0].id_user
+    const id_contact = contact_founded.rows[0].id_user;
+    // si yo(con id_user) ya lo tengo como contacto
     const contact_repetido =await client.query('SELECT * FROM contact WHERE id_user=$1 AND id_contact=$2',[id_user,id_contact]);
     if(contact_repetido.rows.length===0){
-      await client.query('INSERT INTO contact (id_user,id_contact) VALUES ($1,$2)',[id_user,id_contact])
+      await client.query('INSERT INTO contact (id_user,id_contact) VALUES ($1,$2)',[id_user,id_contact]);
+      const contact_added_recently=await client.query('SELECT name_user FROM users WHERE email_user =$1',[email_contact])
+      console.log('recently',contact_added_recently.rows);
+      // encontrar un canal en el que estamos juntas
       const canal_founded = await client.query(`SELECT * FROM canals WHERE integrantes @> '{${id_user}, ${id_contact}}'`);
       if(canal_founded.rows.length===0){
         client.query(`INSERT INTO canals (integrantes) VALUES (ARRAY[${id_user},${id_contact}])`); 
@@ -31,9 +34,8 @@ const addContact = async (req, res) => {
         message: 'contact added successful',
         status:200,
         body: {
-          contact: {
             email_contact,
-          },
+            name_contact:contact_added_recently.rows[0].name_user
         },
       });
     }else{
@@ -113,7 +115,7 @@ const addContact = async (req, res) => {
     [idUser,'disconnect'])
     const arrayContacts = response.rows
     console.log( arrayContacts); */
-    const response=await client.query(`SELECT * FROM canals WHERE integrantes@>ARRAY[${idUser}]`)
+    const response = await client.query(`SELECT * FROM canals WHERE integrantes@>ARRAY[${idUser}]`)
     console.log(response.rows);
     res.status(200).json(response.rows);
   };

@@ -133,9 +133,15 @@ const addContact = async (req, res) => {
     
 
   }; */
+  const getHistoryMsg = async (req, res) =>{
+    const data = req.params.idCanal;
+    const history = await client.query('SELECT * FROM history WHERE id_canal=$1', [data]);
+    res.status(200).json(history.rows);
+  }
 
   module.exports = {
       addContact,
       getContacts,
-      getCanals
+      getCanals,
+      getHistoryMsg
   }

@@ -1,3 +1,4 @@
+/* eslint-disable prefer-template */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-console */
 const { v4 } = require('uuid');
@@ -152,15 +153,28 @@ io.on('connection', (socket) => {
 }); */
 
 
+/* const getHistoryMsg = async (req, res) =>{
+  const data = req.params.idCanal;
+  const history = await client.query('SELECT * FROM history WHERE id_canal=$1', [data]);
+  res.status(200).json(history.rows);
+} */
+
+
 io.on('connection',async (socket) => {
-  const history=await client.query('select * from history');
-  console.log('aqui esta history',history.rows[0].message_history);
+  
   console.log('usuario conectado', socket.id);
-  socket.on('join_canal', (data) => {
+  socket.on('join_canal', async (data) => {
     socket.join(data);
-    console.log('user con id: ', socket.id, ' unido al canal: ', data);
+    // getHistoryMsg();
   });
-  socket.on('send_message', (data) => {
+
+  socket.on('send_message', async (data) => {
+    console.log(data.message);
+    const idUSer = await client.query(`SELECT id_user FROM users WHERE name_user='${data.author}'`)
+    // const time= new Date(Date.now()).getFullYear() + "-" + (new Date(Date.now()).getMonth() + 1) + "-" + new Date(Date.now()).getDate() + " " + new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes() + ":" + new Date(Date.now()).getSeconds();
+    console.log('este es idUSer', idUSer.rows[0].id_user);
+    const prueba = await client.query(`INSERT INTO history (id_canal, id_user, message_history, date_history) VALUES (${data.canal}, ${idUSer.rows[0].id_user}, '${data.message}', '${data.time}' )`)
+    console.log(prueba);
     socket.to(data.canal).emit('receive_message', data);
 
   });
@@ -172,3 +186,6 @@ server.listen(3001, () => {
   console.log(`Servidor inicializado`);
 });
 
+/* module.exports = {
+  getHistoryMsg
+} */

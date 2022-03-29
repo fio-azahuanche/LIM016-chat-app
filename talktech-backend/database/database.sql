@@ -29,7 +29,7 @@ CONSTRAINT fk_canal FOREIGN KEY (id_canal)
 
 
 //----------------------esto es la idea para canal de las conexiones con socket y contact 
-create table canals(
+create table channels(
 id_canal serial,
 integrantes character varying,
 CONSTRAINT pk_canals PRIMARY KEY (id_canal))

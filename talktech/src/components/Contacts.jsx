@@ -41,24 +41,23 @@ function Contacts() {
 
   return (
    
-        <div className='pl-3 bg-pink'>
-          {!showChat ? (
-                        <div className='sectionContact'>
-                        <div className='divContacts'>
-                        <ul> {listContacts.map((contact)=> {
-                            return <li key={contact.id_user} onClick={()=>joinCanal(contact.id_canal)} className='d-flex style-none pt-4 align-items-center'>
-                              <img src={require('../assets/img1.png')} alt="" width='50' />
-                              <h3 className='text-chat mx-2'>{contact.name_user}</h3>
-                              </li>
-                          } )} 
-                          
-                        </ul>
-                        </div>
-                          
-                      </div>
-        ) : (
-            <Chat socket={socket} canal={currentCanal} setShowChat={setShowChat}/>
-        )}
+        <div className='pl-3 bg-pink bodyNav'>  
+          <div className='sectionContact position-relative'>
+            <div className='divContacts'>
+            <ul> {listContacts.map((contact)=> {
+                return <li key={contact.id_user} onClick={()=>joinCanal(contact.id_channel)} className='d-flex style-none pt-4 align-items-center'>
+                  <img src={require('../assets/img1.png')} alt="" width='50' />
+                  <h3 className='text-chat mx-2'>{contact.name_user}</h3>
+                  </li>
+              } )} 
+              
+            </ul>
+            </div>
+            <div className='modal-chat bg-pink'>
+              {showChat && (<Chat socket={socket} canal={currentCanal} setShowChat={setShowChat}/>)}
+            </div>
+            </div>
+        
 
         </div>
   )

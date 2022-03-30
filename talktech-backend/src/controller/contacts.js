@@ -26,9 +26,9 @@ const addContact = async (req, res) => {
       const contact_added_recently=await client.query('SELECT name_user FROM users WHERE email_user =$1',[email_contact])
       console.log('recently',contact_added_recently.rows);
       // encontrar un canal en el que estamos juntas
-      const canal_founded = await client.query(`SELECT * FROM channels WHERE integrantes = '${id_user},${id_contact}'`);
+      const canal_founded = await client.query(`SELECT * FROM channels WHERE integrantes @> ARRAY[${id_user},${id_contact}]`);
       if(canal_founded.rows.length===0){
-        client.query(`INSERT INTO channels (integrantes) VALUES '${id_user},${id_contact}')`); 
+        client.query(`INSERT INTO channels (integrantes) VALUES (ARRAY[${id_user},${id_contact}])`); 
       }
       res.status(200).json({
         message: 'contact added successful',
@@ -105,7 +105,7 @@ const addContact = async (req, res) => {
     [idUser,'disconnect'])
     const arrayContacts = response.rows
     console.log( arrayContacts); */
-    const responseContacts=await client.query("SELECT u.id_user, u.name_user,u.email_user, c.id_canal FROM users u, contact d ,channels c WHERE d.id_user=$1 AND u.id_user=d.id_contact AND c.integrantes LIKE '%'||d.id_contact||'%' AND c.integrantes LIKE '%'||d.id_user||'%'",[idUser])
+    const responseContacts=await client.query("SELECT u.id_user, u.name_user,u.email_user, c.id_channel FROM users u, contact d ,channels c WHERE d.id_user=$1 AND u.id_user=d.id_contact AND c.integrantes @> ARRAY[d.id_contact, d.id_user]",[idUser])
     res.status(200).json(responseContacts.rows);
   };
 
@@ -115,7 +115,7 @@ const addContact = async (req, res) => {
     [idUser,'disconnect'])
     const arrayContacts = response.rows
     console.log( arrayContacts); */
-    const response = await client.query(`SELECT * FROM channels WHERE integrantes LIKE '%${idUser}%'`)
+    const response = await client.query(`SELECT * FROM channels WHERE integrantes @> ARRAY[${idUser}]`)
     console.log(response.rows);
     res.status(200).json(response.rows);
   };
@@ -133,9 +133,15 @@ const addContact = async (req, res) => {
     
 
   }; */
+  const getHistoryMsg = async (req, res) =>{
+    const id_canal = req.params.idCanal;
+    const history = await client.query('SELECT h.id_history,h.message_history,h.date_history,u.name_user as name_author ,h.id_author FROM history h, users u WHERE h.id_author=u.id_user AND h.id_channel=$1 ORDER BY date_history', [id_canal]);
+    res.status(200).json(history.rows);
+  }
 
   module.exports = {
       addContact,
       getContacts,
-      getCanals
+      getCanals,
+      getHistoryMsg
   }

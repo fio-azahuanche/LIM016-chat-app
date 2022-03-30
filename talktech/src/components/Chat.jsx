@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import ScrollToBottom from "react-scroll-to-bottom";
 import {v4 as uuid} from "uuid";
@@ -5,39 +6,69 @@ import {v4 as uuid} from "uuid";
 function Chat({ socket, canal ,setShowChat}) {
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
+
     const userName=sessionStorage.getItem('name_user');
+    const idUser = parseInt(sessionStorage.getItem('id_user'));
+
     const sendMessage = async () => {
         if (currentMessage !== "") {
+            const today=new Date();
             const messageData = {
-                id: sessionStorage.getItem('id_user'),
+                idMsg:uuid(),
+                id_author: idUser,
                 canal: canal,
                 author: userName,
                 message: currentMessage,
-                time: new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes(),
+                time: today.toLocaleString("es-PE", {timeZone: "America/Lima"}),
             };
+            console.log(messageData);
             await socket.emit('send_message', messageData);
             setMessageList((list)=>[...list,messageData]);
             setCurrentMessage("");
         };
     };
+    const getHistory=()=>{
+        const url=`http://localhost:3002/history/${canal}`
+        axios.get(url).then((res)=>{
+            const historial=res.data.map((item) => {
+                console.log(typeof item.id_author);
+                const messageData = {
+                    idMsg: item.id_history,
+                    id_author: item.id_author,
+                    author: item.name_author,
+                    message: item.message_history,
+                    time: item.date_history,
+                }
+                return messageData
+            })
+            setMessageList(historial)
+            console.log(res.data)
+        }).catch((res)=>{
+            console.log(res);
+        })
+        } 
+    
+    useEffect(()=>{
+        getHistory()
+    },[canal])
     useEffect(() => {
-        
         socket.on("receive_message", (data) => {
+            console.log(data);
             setMessageList((list)=>[...list,data]);
         })
     }, [socket]);
     return (
         <div className="chat-window">
-            <i class='bx bx-arrow-back' onClick={()=>{setShowChat(false)}}></i>
-            <div className="chat-header">
+            <div className="chat-header d-flex justify-content-between align-items-center">
                 <p>TalkTech</p>
+                <i class='bx bx-arrow-back' onClick={()=>{setShowChat(false)}}></i>
             </div>
             <div className="chat-body">
                 <ScrollToBottom className="message-container">
                 {messageList.map((messageContent) => {
                     return (
-                    <div className="message" key={messageContent.id}
-                        id={userName === messageContent.author ? "other" : "you"}
+                    <div className="message" key={messageContent.idMsg}
+                        id={idUser === messageContent.id_author ? "other" : "you"}
                     >
                         <div>
                         <div className="message-content">

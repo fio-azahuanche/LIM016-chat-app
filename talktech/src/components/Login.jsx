@@ -26,6 +26,7 @@ function Login() {
             sessionStorage.setItem('name_user', res.data.dataUser.name );
             sessionStorage.setItem('email_user', res.data.dataUser.email ); 
             sessionStorage.setItem('id_user', res.data.dataUser.id );
+            sessionStorage.setItem('img_profile', res.data.dataUser.imgProfile );
             navigate("/chat-contact"); 
           } 
           console.log('esta es la res',res );
@@ -75,7 +76,7 @@ function Login() {
           <h2 className="text-center pt-4 pb-4 ml-2">TalkTech</h2>
         </div>
         <img src={require('../assets/lock.png')} alt="" className="lockLogo"/>
-        <div className="m-3 mx-auto">
+        <div className="m-3 mx-auto formulario">
           <div className="d-flex  flex-column pt-5 pb-4">
             <p id="pinkword" className="pinkword">Inicio Sesión</p>
             <input

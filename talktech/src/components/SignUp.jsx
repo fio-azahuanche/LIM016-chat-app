@@ -8,6 +8,7 @@ const url = "http://localhost:3002/users";
 // const socket = io.connect("http://localhost:3001");
 
 function SignUp() {
+  const img_profile='https://firebasestorage.googleapis.com/v0/b/chat-app-dec86.appspot.com/o/imgPosts%2FdefaultProfile.png?alt=media&token=541bb97f-a649-4d4e-97e7-19a3b429c72b';
   const navigate = useNavigate();
 
   // * States for registration
@@ -29,7 +30,7 @@ function SignUp() {
       setError(true);
       setSubmitted(false);
     } else {
-      const userData = { email, password, name , verified: false, status: 'disconnect' };
+      const userData = { email, password, name , verified: false, status: 'disconnect',imgProfile: img_profile};
       axios
         .post(url, userData)
         .then(function (res) {
@@ -138,7 +139,7 @@ function SignUp() {
       <section className="mx-auto my-auto">
         <img src={require('../assets/lock.png')} alt="" className="lockLogo"/>
         <div className="container sectionLogin">
-      <form className="m-3 mx-auto">
+      <form className="m-3 mx-auto formulario">
         {/* Inputs for form data */}
         <div className="d-flex  flex-column pt-5 pb-4">
         <p id="pinkword" className="pinkword">Registro</p>

@@ -54,7 +54,8 @@ const loginUser = async (req, res) => {
                 token,
                 email: userData.email_user,
                 name: userData.name_user,
-                id: userData.id_user
+                id: userData.id_user,
+                imgProfile:userData.img_profile
               }
               res.status(200).json({message:'receive_token', dataUser});
               client.query('UPDATE users SET status_user=$1 WHERE email_user=$2',

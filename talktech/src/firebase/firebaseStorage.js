@@ -2,9 +2,8 @@ import {
     getStorage,
     ref,
     uploadBytes,
-    getDownloadURL,
-    // eslint-disable-next-line import/no-unresolved
-  } from 'firebase-storage.js';
+    getDownloadURL
+  } from 'firebase/storage';
   
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use

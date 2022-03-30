@@ -1,14 +1,36 @@
 /* eslint-disable no-lone-blocks */
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
+import { subirFileStorage } from '../firebase/firebaseStorage';
 
 function Profile() {
-    const emailUser = sessionStorage.getItem('email_user')
+    const img = sessionStorage.getItem('img_profile');
+    const [imgProfile, setImgProfile]=useState(img)
+
+    const emailUser = sessionStorage.getItem('email_user'); 
+    const idUser = sessionStorage.getItem('id_user');
+    const url=`http://localhost:3002/user_profile/${idUser}`
+    const updateURLfoto =async (e)=>{
+        const archivoLocal=e.target.files[0];
+        if(archivoLocal!==undefined){
+            console.log(archivoLocal);
+        const urlImagen = await subirFileStorage(archivoLocal, 'imgPosts');
+        sessionStorage.setItem('img_profile',urlImagen);
+        setImgProfile(urlImagen)
+        axios.put(url,{imgProfile:urlImagen}).then((response)=>{
+            console.log('imagen actualizada');
+        })
+        console.log(urlImagen);
+        }
+
+    }
   return (
     <section className='container mt-5'>
        <div>
            <div className='imgUser'>
-               <input type="file" id="fichero" className='' />
-               <label htmlFor="fichero" className="circle"><i class='bx bxs-camera-plus fs-2'></i></label>
+               <img src={imgProfile} alt=''/>
+               <input type="file" id="fichero"  onChange={updateURLfoto}/>
+               <label htmlFor="fichero" className="circle"><i className='bx bxs-camera-plus fs-2'></i></label>
            </div>
            <div className='mt-5 d-flex flex-column justify-content-center'>
                <input type="text" className='form-control w-75 mx-auto mb-3' placeholder='Nombre'/>

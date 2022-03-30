@@ -70,17 +70,17 @@ const updateUser = async (req, res) => {
     res.json('Actualizado el password');
   }
 };
-/* 
-const updateProfile = async (req,res) => {
+
+const updateImgProfile = async (req,res) => {
   const id = req.params.id_user;
   const {imgProfile} = req.body;
   await client.query(
-    'UPDATE users SET imgProfile=$1 WHERE id_user=$2',
-    [password_user, name_user, id]
+    'UPDATE users SET img_profile=$1 WHERE id_user=$2',
+    [imgProfile,id]
   );
-  res.json('Actualizado los datos');
+  res.json('Actualizado la imagen de perfil');
 
-} */
+}
 
 module.exports = {
   getUsers,
@@ -88,6 +88,6 @@ module.exports = {
   deleteUser,
   updateUser,
   updateUserValidate,
-  // updateProfile
+  updateImgProfile
 };
  

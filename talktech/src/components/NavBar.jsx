@@ -47,21 +47,21 @@ function NavBar() {
     }) */
   }
 
-  return (
-    <>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-pink">
+  return (<>
+    <div className='pruebaaaa'>
+    <nav className="navbar position-absolute z100 w-100 minHeight navbar-expand-lg navbar-dark bg-pink p-0">
           <img src={require('../assets/logo_talktech.png')} alt="" className='img-talktech'/>
             <a className="navbar-brand paddingNav" href="#">TalkTech</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
+  <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span className="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link paddingNav" onClick={routerProfile}>Perfil</a>
+  <div className="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul className="navbar-nav mr-auto">
+      <li className="nav-item active">
+        <a className="nav-link paddingNav" onClick={routerProfile}>Perfil</a>
       </li>
-      <li class="nav-item">
+      <li className="nav-item">
         <a className="nav-link paddingNav" onClick={addContactModal}>Agregar Contacto</a>
         <div id="miModal" className="modal-success">    
         <div  className="modal-contact">
@@ -75,31 +75,31 @@ function NavBar() {
         </div>
       </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link paddingNav" href="#" onClick={routerCanal}>Crear Canal</a>
+      <li className="nav-item">
+        <a className="nav-link paddingNav" href="#" onClick={routerCanal}>Crear Canal</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link paddingNav" href="#">Cerrar Sesión</a>
+      <li className="nav-item">
+        <a className="nav-link paddingNav" href="#">Cerrar Sesión</a>
       </li>
     </ul>
   </div>
 </nav>
-<nav class=" navbar-expand-lg navbar-dark pb-2 bg-pink">
-  <div class="container-fluid">
-    <div class="" id="navbarNav">
-      <ul class="navbarChat ">
-      <li class="nav-item">
+</div>
+<nav className=" navbar-expand-lg navbar-dark bg-pink nav-responsive" style={{height:'7vh'}}>
+  <div className="container-fluid">
+    <div className="" id="navbarNav">
+      <ul className="navbarChat ">
+      <li className="nav-item">
           <NavLink className="style-none active" aria-current="page" to="/chat-contact"><a class="nav-link text-white style-none" href="">Chats</a></NavLink>
         </li>
-        <li class="nav-item">
-          <NavLink className="style-none" to="/contacts"><a class="nav-link text-white style-none" href="">Contactos</a></NavLink>
+        <li className="nav-item">
+          <NavLink className="style-none" to="/contacts"><a className="nav-link text-white style-none" href="">Contactos</a></NavLink>
         </li>
       </ul>
     </div>
   </div>
 </nav>
-</>
-  )
+  </>)
 }
 
 export default NavBar

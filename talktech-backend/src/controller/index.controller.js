@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable camelcase */
 const { Client } = require('pg');
+const bcrypt = require("bcryptjs");
 
 
 const client = new Client({
@@ -46,18 +47,47 @@ const deleteUser = async (req, res) => {
 const updateUser = async (req, res) => {
   const id = req.params.id_user;
   const { password_user, name_user } = req.body;
+  console.log('este es e password',password_user);
+  
+  console.log('este es e name',name_user);
+  if(password_user!==undefined && name_user!==undefined){
+    await client.query(
+      'UPDATE users SET password_user=$1, name_user=$2 WHERE id_user=$3',
+      [bcrypt.hashSync(password_user,8), name_user, id]
+    );
+    res.json('Actualizado los datos');
+  }else if(password_user===undefined || name_user!==undefined){
+    await client.query(
+      'UPDATE users SET name_user=$1 WHERE id_user=$2',
+      [name_user, id]
+    );
+    res.json('Actualizado el nombre');
+  }else{
+    await client.query(
+      'UPDATE users SET password_user=$1 WHERE id_user=$2',
+      [bcrypt.hashSync(password_user,8), id]
+    );
+    res.json('Actualizado el password');
+  }
+};
+/* 
+const updateProfile = async (req,res) => {
+  const id = req.params.id_user;
+  const {imgProfile} = req.body;
   await client.query(
-    'UPDATE users SET password_user=$1, name_user=$2 WHERE id_user=$3',
+    'UPDATE users SET imgProfile=$1 WHERE id_user=$2',
     [password_user, name_user, id]
   );
   res.json('Actualizado los datos');
-};
+
+} */
 
 module.exports = {
   getUsers,
   getUsersById,
   deleteUser,
   updateUser,
-  updateUserValidate
+  updateUserValidate,
+  // updateProfile
 };
  

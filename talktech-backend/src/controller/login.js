@@ -79,7 +79,7 @@ const getTemplate = (name, tokenConfirm) => {
   }; */
 
 const createUsers = async (req, res) => {
-    const { email, password, name, verified, status } = req.body;
+    const { email, password, name, verified, status ,imgProfile} = req.body;
     
     const token = jwt.sign({email}, 'secret_key')
     const duplicate_user = await client.query(
@@ -90,8 +90,8 @@ const createUsers = async (req, res) => {
     console.log(name, email);
     if (userData.length === 0) {
      await client.query(
-        `INSERT INTO users (email_user, password_user, name_user, verified_user, status_user,tokenup_user) VALUES ($1, $2, $3, $4, $5,$6)`,
-        [email, bcrypt.hashSync(password,8), name, verified, status, token]
+        `INSERT INTO users (email_user, password_user, name_user, verified_user, status_user,tokenup_user, img_profile) VALUES ($1, $2, $3, $4, $5,$6,$7)`,
+        [email, bcrypt.hashSync(password,8), name, verified, status, token,imgProfile]
       );
       res.status(200).json({
         message: 'user added successful',
@@ -103,7 +103,8 @@ const createUsers = async (req, res) => {
             name,
             verified,
             status,
-            token
+            token,
+            imgProfile
           },
         },
       });/* 

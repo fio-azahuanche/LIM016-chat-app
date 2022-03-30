@@ -6,6 +6,7 @@ create table users(
 	verified_user boolean,
     status_user character varying,
     tokenup_user character varying,
+    img_profile character varying,
     CONSTRAINT pk_user PRIMARY KEY (id_user)
 )
 

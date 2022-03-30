@@ -7,71 +7,72 @@ import {v4 as uuid} from "uuid";
 function Chat({ socket, canal ,setShowChat}) {
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
+
     const userName=sessionStorage.getItem('name_user');
     const idUser = parseInt(sessionStorage.getItem('id_user'));
     const sendMessage = async () => {
         if (currentMessage !== "") {
+            const today=new Date();
             const messageData = {
-                id: idUser,
+                idMsg:uuid(),
+                id_author: idUser,
                 canal: canal,
                 author: userName,
                 message: currentMessage,
-                time: new Date(Date.now()).getFullYear() + "-" + (new Date(Date.now()).getMonth() + 1) + "-" + new Date(Date.now()).getDate() + " " + new Date(Date.now()).getHours() + ":" + new Date(Date.now()).getMinutes() + ":" + new Date(Date.now()).getSeconds(),
+                time: today.toLocaleString("es-PE", {timeZone: "America/Lima"}),
             };
-           // console.log(messageData);
-            console.log(typeof idUser);
-            
+            console.log(messageData);
             await socket.emit('send_message', messageData);
             setMessageList((list)=>[...list,messageData]);
             setCurrentMessage("");
         };
     };
-   const getHistory=()=>{
-    const url=`http://localhost:3002/history/${canal}`
-    axios.get(url).then((res)=>{
-        res.data.map((item) => {
-            console.log(typeof item.id_user);
-            const messageData = {
-                idMsg: item.id_history,
-                id: item.id_user,
-                author: item.id_user,
-                message: item.message_history,
-                time: item.date_history,
-            };
-            setMessageList((list)=>[...list,messageData]);
+    const getHistory=()=>{
+        const url=`http://localhost:3002/history/${canal}`
+        axios.get(url).then((res)=>{
+            const historial=res.data.map((item) => {
+                console.log(typeof item.id_author);
+                const messageData = {
+                    idMsg: item.id_history,
+                    id_author: item.id_author,
+                    author: item.name_author,
+                    message: item.message_history,
+                    time: item.date_history,
+                }
+                return messageData
+            })
+            setMessageList(historial)
+            console.log(res.data)
+        }).catch((res)=>{
+            console.log(res);
         })
-        
-        console.log(res.data)
-    }).catch((res)=>{
-        console.log(res);
-    })
-    } 
-
+        } 
     useEffect(()=>{
-        getHistory()
         return ()=>{
             setMessageList([])
         }
     },[])
-
+    useEffect(()=>{
+        getHistory()
+    },[canal])
     useEffect(() => {
-        
         socket.on("receive_message", (data) => {
+            console.log(data);
             setMessageList((list)=>[...list,data]);
         })
     }, [socket]);
     return (
         <div className="chat-window">
-            <i class='bx bx-arrow-back' onClick={()=>{setShowChat(false)}}></i>
-            <div className="chat-header">
+            <div className="chat-header d-flex justify-content-between align-items-center">
                 <p>TalkTech</p>
+                <i class='bx bx-arrow-back' onClick={()=>{setShowChat(false)}}></i>
             </div>
             <div className="chat-body">
                 <ScrollToBottom className="message-container">
                 {messageList.map((messageContent) => {
                     return (
                     <div className="message" key={messageContent.idMsg}
-                        id={idUser === parseInt(messageContent.id) ? "other" : "you"}
+                        id={idUser === messageContent.id_author ? "other" : "you"}
                     >
                         <div>
                         <div className="message-content">

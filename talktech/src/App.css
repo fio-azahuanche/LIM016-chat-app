@@ -99,33 +99,38 @@ body {
     } */
 
     .chat-window {
-        width: 300px;
-        height: 420px;
+       /*  width: 300px; */
+        width: 100%;
+        height: 92vh;
+        /* height: 420px;
         margin: auto;
-        margin-top: 100px;
+        margin-top: 100px; */
     }
     .chat-window p {
         margin: 0;
     }
     .chat-window .chat-header {
-        height: 45px;
+        height: 8%;
         border-radius: 6px;
-        background: #1d070e;
+        background: #FFFFFF;
         position: relative;
         cursor: pointer;
+        /*  */
+        padding:0 20px;
     }
     .chat-window .chat-header p {
         display: block;
-        padding: 0 1em 0 2em;
-        color: #fac7e3;
+        /* padding: 0 1em 0 2em; */
+        color: #3E5077;
         font-weight: 700;
         line-height: 45px;
     }
-    .chat-window .chat-body {
-        height: calc(450px - (45px + 70px));
-        border: 1px solid #1d070e;
+    .chat-window .chat-body {/* 
+        height: calc(450px - (45px + 70px)); */
+        height: 82%;/* 
+        border: 1px solid #1d070e; */
         /* background-image:url("./assets/fondo3.jpg"); */
-        background:white;
+        background: #FFD2E0;
         background-position:center;
         background-size:cover;
         background-repeat:no-repeat;
@@ -150,7 +155,7 @@ body {
         width: auto;
         height: auto;
         min-height: 40px;
-        max-width: 120px;
+        max-width: 500px;
         background-color: #3fc5d6;
        /*  text-shadow:1px 1px 1px black; */
         box-shadow: 2px 2px 2px white;
@@ -193,8 +198,9 @@ body {
         display: flex;
         font-size: 12px;
     }
-    .chat-window .chat-footer {
-        height: 40px;
+    .chat-window .chat-footer {/* 
+        height: 40px; */
+        height: 10%;
         border: 1px solid #cdedfd;
         border-top: none;
         display: flex;
@@ -289,18 +295,21 @@ body {
     
     /* Contactos */
     .sectionContact {
-        border-radius: 40px 40px 0 0;
+        /* border-radius: 40px 40px 0 0; */
         background-image: url('./assets/fondo3.jpg');
-        opacity: 0.8;
-        width: 100%;
-        height: 100vh;
-        padding: 30px;
+        opacity: 0.8;/* 
+        height: 100vh; */
+        height: 100%;
+        /*  */
+        display: flex;
+       /*  padding: 30px; */
         font-family: 'Arial', sans-serif;
     }
     .divContacts {
         background-color: rgba(255, 255, 255, 0.7);
-        width: 100%;
-        height: 78vh;
+        margin: 2%;
+        width: 21%;/* 
+        height: 78vh; */
         border-radius: 40px;
     }
     .paddingNav {
@@ -374,11 +383,12 @@ body {
         left: 0;
         bottom: 0;
     }
+
     #fichero{
         display: none;
-      }
-      
-      .circle{
+    }
+
+    .circle{
         display: inline-block;
         background-color: #D885A3;
         border-radius: 50%;
@@ -392,5 +402,82 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
+    }
+
+
+
+
+      
+      .nav-responsive{
+          display: none;
+      }
+      
+      .modal-chat{
+          width: 75%;
+      }
+      
+      .bodyNav{
+        height: 92vh;
+    }
+      @media (max-width: 950px) {
+        .divContacts{
+            width: 26%;
+        }
+        .modal-chat{
+            width: 70%;
+        }
+        .chat-window .chat-body .message .message-content{
+            max-width: 350px;
+        }
       }
     
+      @media (max-width: 750px) {
+        .divContacts{
+            width: 31%;
+        }
+        .modal-chat{
+            width: 65%;
+        }
+        .chat-window .chat-body .message .message-content{
+            max-width: 250px;
+            
+        }
+      }
+      @media (max-width: 600px) {
+        .nav-responsive{
+            display: block;
+        }
+        .chat-window{
+            border-radius: 20px 20px 0 0;
+            height: 85vh;
+        }
+        .chat-window .chat-header {
+            border-radius: 20px 20px 0 0;
+        }
+        .sectionContact{
+            flex-direction: column;
+        }
+        .divContacts{
+            width: 96%;
+            height: 96%;
+        }
+        .modal-chat{
+            width: 100%;
+            position: absolute;
+        }
+        .bodyNav{
+            height: 85vh;
+        }
+        .chat-window{
+            height: 85vh;
+        }
+      }
+      .pruebaaaa{
+          height: 8vh;
+      }
+      .z100{
+          z-index:100;
+      }
+      .minHeight{
+          min-height: 8vh;
+      }

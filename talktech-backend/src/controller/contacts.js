@@ -135,7 +135,8 @@ const addContact = async (req, res) => {
   }; */
   const getHistoryMsg = async (req, res) =>{
     const id_canal = req.params.idCanal;
-    const history = await client.query('SELECT h.id_history,h.message_history,h.date_history,u.name_user as name_author ,h.id_author FROM history h, users u WHERE h.id_author=u.id_user AND h.id_channel=$1 ORDER BY date_history', [id_canal]);
+    const history = await client.query("SELECT h.id_history,h.message_history,h.date_history at time zone 'utc' ,u.name_user as name_author ,h.id_author FROM history h, users u WHERE h.id_author=u.id_user AND h.id_channel=$1 ORDER BY date_history", [id_canal]);
+    console.log('historyyy',history.rows);
     res.status(200).json(history.rows);
   }
 

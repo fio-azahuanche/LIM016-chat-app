@@ -37,7 +37,7 @@ function Chat({ socket, canal ,setShowChat}) {
                     id_author: item.id_author,
                     author: item.name_author,
                     message: item.message_history,
-                    time: item.date_history,
+                    time: item.timezone.split('T').join(' ').slice(0,19)
                 }
                 return messageData
             })

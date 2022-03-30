@@ -10,14 +10,67 @@ border:1px solid black;
 body {
     margin: 0%;
     padding: 0%;
-  /*   font-family: 'Raleway', sans-serif; */
+    font-family: 'Raleway', sans-serif;
     /* background:#822659; */
-    background-image:url("./assets/fondo3.jpg");
+    /* background-image:url("./assets/fondo3.jpg");
+    background-position:center;
+    background-size:cover;
+    background-repeat:no-repeat; */
+    background-color: #FFD2E0;
+    height:100vh;
+
+}
+.portada{
+    background-image:url("./assets/fondo.png");
     background-position:center;
     background-size:cover;
     background-repeat:no-repeat;
-    height:100vh;
-
+    width: 50%;
+    height: 100vh;
+}
+.imgLogo{
+    width: 50px;
+    height: 50px;
+}
+.slogan{
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-size: 30px;
+    text-shadow: 0px 4px 4px rgb(0 0 0 / 50%);
+    font-family: 'Raleway', sans-serif;
+    margin: 15% 20%;
+}
+.title{
+    display: none !important;
+}
+.line{
+    margin-top: 25%;
+    margin-right: 40px;
+}
+hr {
+    margin-left: 30%;
+    width: 50%;
+    background-color: white;
+  }
+.link{
+    margin: 0 5px 0 20px;
+    color: white;
+    font-size: 20px;
+    text-shadow: 0px 4px 4px rgb(0 0 0 / 50%);
+}
+.lockLogo{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.pinkword{
+    /* color: #F588B0; */
+    color: #0D1C3C;
+}
+#pinkword{
+    color: #F588B0;
+    font-size: 40px;
 }
     .sectionLogin{
         padding-top:100px;
@@ -25,18 +78,20 @@ body {
     }
     .sectionLogin .divLogin{
         max-width:350px;
-        background:#d4eaed63;
+        background-color:#d4eaed63;
         border-radius:20px;
-
     }
     .linkContraseña{
+        font-weight: bold;
         font-size:14px;
         margin-right: 38px !important;
-        color:white;
-        text-shadow: 1px 1px 1px rgb(41, 39, 39);
+        color: #F588B0;
+        cursor: pointer;
+        /* text-shadow: 1px 1px 1px rgb(41, 39, 39); */
     }
     .linkContraseña:hover{
-        color:#812056;
+        /* color:#812056; */
+        color: #812056;
         text-shadow: none;
     }
     .btnLogin{
@@ -45,12 +100,12 @@ body {
         box-shadow:2px 4px 4px #812056;
         border-radius:10px;
         font-size:16px;
-        font-family: 'Raleway', sans-serif;
     }
     .inputLogin{
         border-radius:10px;
-        font-family: 'Raleway', sans-serif;
         box-shadow:2px 4px 4px #812056;
+        width: 350px;
+        height: 40px;
     }
     .inputLogin::placeholder{
             color:#822659;
@@ -68,7 +123,7 @@ body {
         z-index:-10;
     }
     h2 {
-        color:#FFD2E0;
+        color:#FFFFFF;
         text-shadow:5px 5px 2px #801e54;
         font-size:60px;
         font-family: 'Architects Daughter', cursive;
@@ -419,6 +474,15 @@ body {
       .bodyNav{
         height: 92vh;
     }
+    .pruebaaaa{
+        height: 8vh;
+    }
+    .z100{
+        z-index:100;
+    }
+    .minHeight{
+        min-height: 8vh;
+    }
       @media (max-width: 950px) {
         .divContacts{
             width: 26%;
@@ -428,6 +492,43 @@ body {
         }
         .chat-window .chat-body .message .message-content{
             max-width: 350px;
+        }
+      }
+   
+      @media only screen and (max-width: 600px) {
+        body {
+            background-image:url("./assets/fondo3.jpg");
+            background-position:center;
+            background-size:cover;
+            background-repeat:no-repeat;
+        }
+        .portada{
+            display: none;
+        }
+        .lockLogo{
+            display: none !important;
+        }
+        .inputLogin{
+            border-radius:10px;
+            box-shadow:2px 4px 4px #812056;
+            width: 250px;
+            height: 30px;
+        }
+        .title{
+            display: block !important;
+            text-shadow: 1px 1px 1px rgb(41, 39, 39);
+        }
+        .imgLogo{
+            display: none;
+        }
+        .pinkword, .linkContraseña{
+            color: #FFD2E0 !important;
+            text-shadow: 1px 1px 1px rgb(41, 39, 39);
+        }
+        .linkContraseña:hover{
+            /* color:#812056; */
+            color: #812056;
+            text-shadow: none;
         }
       }
     
@@ -472,12 +573,4 @@ body {
             height: 85vh;
         }
       }
-      .pruebaaaa{
-          height: 8vh;
-      }
-      .z100{
-          z-index:100;
-      }
-      .minHeight{
-          min-height: 8vh;
-      }
+     

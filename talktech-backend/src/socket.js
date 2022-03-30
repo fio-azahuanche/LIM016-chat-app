@@ -177,7 +177,7 @@ io.on('connection',async (socket) => {
       newTime=`${fechaHora[0]}/0${arrayTime[1]}/0${arrayTime[0]} ${fechaHora[1]}`
     };
     console.log(newTime);
-    const prueba= await client.query(`insert into history(date_history,id_author,id_channel,message_history) values ('${newTime.toString()}',${data.id_author},${data.canal},'${data.message}')`)
+    const prueba= await client.query(`insert into history(date_history,id_author,id_channel,message_history) values ('${newTime.toString()} America/Lima',${data.id_author},${data.canal},'${data.message}')`)
     console.log(prueba);
     socket.to(data.canal).emit('receive_message', data);
 

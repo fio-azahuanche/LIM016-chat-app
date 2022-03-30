@@ -75,6 +75,10 @@ function SignUp() {
     axios.get()
   }
 
+  const linkToLogin = () => {
+    navigate("/");
+  };
+
   const closeModal = () => {
     const idModal = document.getElementById("miModal");
     idModal.setAttribute("class", "modal-success");
@@ -116,12 +120,30 @@ function SignUp() {
     console.log("submitted", submitted);
   }, [submitted]);
   return (
-    <div className="container sectionLogin">
-      <form className="divLogin m-3 mx-auto">
+    <section className="d-flex">
+      <section className="portada">
+        <div className="d-flex align-items-center justify-content-center m-4">
+          <img src={require('../assets/logo_2.png')} alt="" className="imgLogo"/>
+          <h2 className="text-center pt-4 pb-4 ml-2">TalkTech</h2>
+        </div>
+        <div className="slogan">
+          <p className="p-0 m-0">Bienvenidx,</p>
+          <p>Regístrate para la mejor experiencia de mensajería</p>
+        </div>
+        <div className="d-flex align-items-center line">
+          <hr />
+          <p className="link">www.talktech.com</p>
+        </div>
+      </section>
+      <section className="mx-auto my-auto">
+        <img src={require('../assets/lock.png')} alt="" className="lockLogo"/>
+        <div className="container sectionLogin">
+      <form className="m-3 mx-auto">
         {/* Inputs for form data */}
         <div className="d-flex  flex-column pt-5 pb-4">
+        <p id="pinkword" className="pinkword">Registro</p>
           <input
-            className="form-control w-75 mx-auto inputLogin"
+            className="form-control mx-auto inputLogin"
             type="text"
             placeholder="Ingrese nombre"
             onChange={(e) => {
@@ -131,7 +153,7 @@ function SignUp() {
           />
 
           <input
-            className="form-control mt-4 w-75  mx-auto inputLogin"
+            className="form-control mt-4 mx-auto inputLogin"
             type="email"
             placeholder="Ingrese correo"
             onChange={(e) => {
@@ -141,7 +163,7 @@ function SignUp() {
           />
 
           <input
-            className="form-control mt-4 w-75 mx-auto inputLogin"
+            className="form-control mt-4 mx-auto inputLogin"
             type="password"
             placeholder="Ingrese contraseña"
             onChange={(e) => {
@@ -153,8 +175,11 @@ function SignUp() {
 
         <div className="pb-5 d-flex justify-content-center">
           <button className="btn btnLogin" onClick={signupUser}>
-            Registrar
+            Registrarse
           </button>
+        </div>
+        <div className="text-center">
+          <p className="pinkword">¿Ya tienes una cuenta? <span onClick={linkToLogin} className="linkContraseña">Iniciar Sesión</span></p>
         </div>
       </form>
 
@@ -164,6 +189,9 @@ function SignUp() {
         {successMessage()}
       </div>
     </div>
+      </section>
+      
+    </section>
   );
 }
 

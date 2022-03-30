@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { io } from 'socket.io-client';
+import {v4 as uuid} from "uuid";
 import Chat from './Chat';
 const socket=io.connect("http://localhost:3001")
 function ChatContact() {
@@ -32,9 +33,10 @@ function ChatContact() {
         return item.integrantes.filter((it)=>it!==parseInt(idUser))[0]
       });
       getDataIntegrantes(id_contacts).then((response)=>{
+        console.log('este es el respnse',response);
         setChannel((list)=>{
           const newList=response.map((el,index)=>({...el,id_canal:res.data[index].id_channel}))
-          console.log(newList);
+          console.log('esto es lo que verificamos',newList);
           return [...newList]
         });
       });
@@ -74,11 +76,10 @@ function ChatContact() {
       <div className='sectionContact position-relative'> 
         <div className='divContacts'>
         {channels.map((item)=>{
-          return <><div key={item.id_contact} className='d-flex' onClick={()=>joinCanal(item.id_canal)}>
+          return <div key={item.id_contact} className='d-flex' onClick={()=>joinCanal(item.id_canal)}>
                     <img src={require('../assets/img1.png')} alt="" width='50' />
                     <h3 className='text-chat mx-2'>{item.nameContact}</h3>
                   </div>
-                  <hr/></>
         })}
         </div>
         <div className='modal-chat bg-pink'>

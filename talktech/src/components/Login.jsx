@@ -49,18 +49,37 @@ function Login() {
             }) */
     }
   };
-
+  const linkToSignup = () => {
+    navigate("/signup");
+  };
   
   return (
-    <section className="container sectionLogin">
-      <div>
-        <div className="m-4">
-          <h2 className="text-center pt-4 pb-4">TalkTech</h2>
+    <section className="d-flex">
+      <section className="portada">
+        <div className="d-flex align-items-center justify-content-center m-4">
+          <img src={require('../assets/logo_2.png')} alt="" className="imgLogo"/>
+          <h2 className="text-center pt-4 pb-4 ml-2">TalkTech</h2>
         </div>
-        <div className="divLogin m-3 mx-auto">
+        <div className="slogan">
+          <p className="p-0 m-0">Bienvenidx,</p>
+          <p>Inicia sesión para la mejor experiencia de mensajería</p>
+        </div>
+        <div className="d-flex align-items-center line">
+          <hr />
+          <p className="link">www.talktech.com</p>
+        </div>
+      </section>
+      <section className="divLogin mx-auto my-auto">
+        <div className="d-flex align-items-center justify-content-center m-4 title">
+          <img src={require('../assets/logo_2.png')} alt="" className="imgLogo"/>
+          <h2 className="text-center pt-4 pb-4 ml-2">TalkTech</h2>
+        </div>
+        <img src={require('../assets/lock.png')} alt="" className="lockLogo"/>
+        <div className="m-3 mx-auto">
           <div className="d-flex  flex-column pt-5 pb-4">
+            <p id="pinkword" className="pinkword">Inicio Sesión</p>
             <input
-              className="form-control w-75 mx-auto inputLogin"
+              className="form-control mx-auto inputLogin"
               type="text"
               placeholder="Ingrese correo"
               onChange={(event) => {
@@ -68,24 +87,29 @@ function Login() {
               }}
             />
             <input
-              className="form-control mt-4 w-75  mx-auto inputLogin"
+              className="form-control mt-4 mx-auto inputLogin"
               type="password"
               placeholder="Ingrese contraseña"
               onChange={(event) => {
                 setPassword(event.target.value);
               }}
             />
-            <a href="/" className="mt-3 mx-auto  linkContraseña">
+            <a href="/" className="mt-3 mx-auto linkContraseña">
               ¿Olvidaste la contraseña?
             </a>
           </div>
           <div className="pb-5 d-flex justify-content-center">
             <button className="btn btnLogin" onClick={loginUser}>
-              Iniciar Sesión
+              Ingresar
             </button>
           </div>
+          <div className="text-center">
+          <p className="pinkword">¿No tienes una cuenta? <span onClick={linkToSignup} className="linkContraseña">Regístrate</span></p>
+          </div>
+          
         </div>
-      </div>
+      </section>
+      
     </section>
   );
 }

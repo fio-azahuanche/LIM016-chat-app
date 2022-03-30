@@ -16,7 +16,7 @@ client.connect();
 const addContact = async (req, res) => {
   const {email_contact,id_user} =  req.body;
   // existe el contacto como usuario de la aplicacion
-  const contact_founded = await client.query('SELECT id_user FROM users WHERE email_user =$1',[email_contact]);
+  const contact_founded = await client.query('SELECT id_user FROM users WHERE email_user =$1 AND verified_user=true',[email_contact]);
   if(contact_founded.rows.length!==0){
     const id_contact = contact_founded.rows[0].id_user;
     // si yo(con id_user) ya lo tengo como contacto

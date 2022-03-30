@@ -74,7 +74,7 @@ function ChatContact() {
       <div className='sectionContact position-relative'> 
         <div className='divContacts'>
         {channels.map((item)=>{
-          return <><div key={item.id_contact} className='divContact' onClick={()=>joinCanal(item.id_canal)}>
+          return <><div key={item.id_contact} className='d-flex' onClick={()=>joinCanal(item.id_canal)}>
                     <img src={require('../assets/img1.png')} alt="" width='50' />
                     <h3 className='text-chat mx-2'>{item.nameContact}</h3>
                   </div>

@@ -152,11 +152,18 @@ io.on('connection', (socket) => {
 }); */
 
 
+/* const getHistoryMsg = async (req, res) =>{
+  const data = req.params.idCanal;
+  const history = await client.query('SELECT * FROM history WHERE id_canal=$1', [data]);
+  res.status(200).json(history.rows);
+} */
+
+
 io.on('connection',async (socket) => {
   console.log('usuario conectado', socket.id);
-  socket.on('join_canal', (data) => {
+  socket.on('join_canal', async (data) => {
     socket.join(data);
-    console.log('user con id: ', socket.id, ' unido al canal: ', data);
+    // getHistoryMsg();
   });
   socket.on('send_message', async(data) => {
     const arrayTime = data.time.split('/');
@@ -183,3 +190,6 @@ server.listen(3001, () => {
   console.log(`Servidor inicializado`);
 });
 
+/* module.exports = {
+  getHistoryMsg
+} */

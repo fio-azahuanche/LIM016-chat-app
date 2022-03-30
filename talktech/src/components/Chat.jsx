@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react';
 import ScrollToBottom from "react-scroll-to-bottom";
 import {v4 as uuid} from "uuid";
 
+
 function Chat({ socket, canal ,setShowChat}) {
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
 
     const userName=sessionStorage.getItem('name_user');
     const idUser = parseInt(sessionStorage.getItem('id_user'));
-
     const sendMessage = async () => {
         if (currentMessage !== "") {
             const today=new Date();
@@ -47,7 +47,11 @@ function Chat({ socket, canal ,setShowChat}) {
             console.log(res);
         })
         } 
-    
+    useEffect(()=>{
+        return ()=>{
+            setMessageList([])
+        }
+    },[])
     useEffect(()=>{
         getHistory()
     },[canal])

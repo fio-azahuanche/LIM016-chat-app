@@ -5,6 +5,7 @@ create table users(
 	password_user character varying,
 	verified_user boolean,
     status_user character varying,
+    tokenup_user character varying,
     CONSTRAINT pk_user PRIMARY KEY (id_user)
 )
 

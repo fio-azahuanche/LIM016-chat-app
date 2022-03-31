@@ -16,7 +16,7 @@ body {
     background-position:center;
     background-size:cover;
     background-repeat:no-repeat; */
-    background-color: #FFD2E0;
+    background-color: rgba(255, 192, 211, 0.2);
     height:100vh;
 
 }
@@ -35,9 +35,10 @@ body {
 .slogan{
     display: flex;
     flex-direction: column;
-    color: white;
+    color: #822659;
     font-size: 30px;
-    text-shadow: 0px 4px 4px rgb(0 0 0 / 50%);
+    font-weight: bold;
+    text-shadow: 0px 1px 1px rgb(0 0 0 / 50%);
     font-family: 'Raleway', sans-serif;
     margin: 15% 20%;
 }
@@ -55,7 +56,7 @@ hr {
   }
 .link{
     margin: 0 5px 0 20px;
-    color: white;
+    color: #822659;
     font-size: 20px;
     text-shadow: 0px 4px 4px rgb(0 0 0 / 50%);
 }
@@ -129,7 +130,7 @@ hr {
         font-family: 'Architects Daughter', cursive;
     }
     .canal {
-        background-image:url("./assets/fondo3.jpg");
+        background-image:url("./assets/fondo.png");
         background-position:center;
         background-size:cover;
         background-repeat:no-repeat;
@@ -153,6 +154,10 @@ hr {
         font-family: 'Architects Daughter', cursive;
     } */
 
+    .banner{
+        background-color: #F4E4F1;
+        height: 100%;
+    }
     .chat-window {
        /*  width: 300px; */
         width: 100%;
@@ -189,7 +194,7 @@ hr {
         background-position:center;
         background-size:cover;
         background-repeat:no-repeat;
-
+        background-image: url('./assets/bg-chat.png');
         position: relative;
     }
     .chat-window .chat-body .message-container {
@@ -305,12 +310,17 @@ hr {
         height: 30px;
         border-radius: 50%;
     }
+    #miModal{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     .modal-contenido {
         background-color: white;
         width: 300px;
         height: 150px;
         padding: 10px 20px;
-        margin: 20% auto;
+        margin: 0;
         position: relative;
         opacity: 1;
         pointer-events: auto;
@@ -320,7 +330,6 @@ hr {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-top: 50%;
     }
     
     .modal-success {
@@ -338,7 +347,7 @@ hr {
     
     .show-modal {
         pointer-events: auto;
-        background-color: rgba(0, 0, 0, 0.60);
+        background-color: rgba(0, 0, 0, 0.75);
         position: fixed;
         top: 0;
         right: 0;
@@ -351,8 +360,10 @@ hr {
     
     /* Contactos */
     .sectionContact {
-        /* border-radius: 40px 40px 0 0; */
-        background-image: url('./assets/fondo3.jpg');
+        /* border-radius: 40px 40px 0 0; 
+        background-image: url('./assets/fondo3.jpg');*/
+        
+        background-image: url('./assets/bg-contact.png');
         opacity: 0.8;/* 
         height: 100vh; */
         height: 100%;
@@ -362,7 +373,7 @@ hr {
         font-family: 'Arial', sans-serif;
     }
     .divContacts {
-        background-color: rgba(255, 255, 255, 0.7);
+        background-color: rgba(255, 255, 255, 0.4);
         margin: 2%;
         width: 21%;/* 
         height: 78vh; */
@@ -370,6 +381,9 @@ hr {
     }
     .paddingNav {
         padding-left: 20px !important;
+    }
+    .bg-purple{
+        background-color: #822659;
     }
     .bg-pink {
         background-color: #D885A3;
@@ -406,8 +420,8 @@ hr {
         background-color: white;
         width: 300px;
         height: 120px;
+        margin: 0;
         padding: 15px 20px 0px 20px;
-        margin: 20% auto;
         position: relative;
         opacity: 1;
         pointer-events: auto;
@@ -417,7 +431,6 @@ hr {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-top: 50%;
     }
     a{
         text-decoration: none;
@@ -432,6 +445,9 @@ hr {
         background-color: white;
         border-radius: 50%;
         margin: auto;
+    }
+    .img-profile{
+        object-fit: fill;
     }
 
     .inputImgUser {
@@ -498,7 +514,7 @@ hr {
    
       @media (max-width: 600px) {
         body {
-            background-image:url("./assets/fondo3.jpg");
+            background-image:url("./assets/fondo.png");
             background-position:center;
             background-size:cover;
             background-repeat:no-repeat;
@@ -551,6 +567,9 @@ hr {
         }
       }
       @media (max-width: 600px) {
+        .banner{
+            display: none !important;
+        }
         .nav-responsive{
             display: block;
         }

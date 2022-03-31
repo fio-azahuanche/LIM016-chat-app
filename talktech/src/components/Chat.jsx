@@ -4,7 +4,7 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import {v4 as uuid} from "uuid";
 
 
-function Chat({ socket, canal ,setShowChat}) {
+function Chat({ socket, canal ,setShowChat, nameCanal}) {
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
 
@@ -55,6 +55,7 @@ function Chat({ socket, canal ,setShowChat}) {
     useEffect(()=>{
         getHistory()
     },[canal])
+    
     useEffect(() => {
         socket.on("receive_message", (data) => {
             console.log(data);
@@ -64,7 +65,7 @@ function Chat({ socket, canal ,setShowChat}) {
     return (
         <div className="chat-window">
             <div className="chat-header d-flex justify-content-between align-items-center">
-                <p>TalkTech</p>
+                <p>{nameCanal}</p>
                 <i class='bx bx-arrow-back' onClick={()=>{setShowChat(false)}}></i>
             </div>
             <div className="chat-body">

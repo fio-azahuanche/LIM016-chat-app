@@ -6,11 +6,14 @@ import Chat from './Chat';
 const socket=io.connect("http://localhost:3001")
 function ChatContact() {
   const idUser = sessionStorage.getItem('id_user');
+  const nameUser = sessionStorage.getItem('name_user');
   const url2 = `http://localhost:3002/canals/${idUser}`
 
   const [channels, setChannel ] = useState([]);
   const [showChat,setShowChat]=useState(false);
-  const [currentCanal, setCurrentCanal] = useState('')
+  const [currentCanal, setCurrentCanal] = useState('');
+  const [currentNameCanal, setCurrentNameCanal] = useState('');
+
 
   const getDataIntegrantes = (arrayIdIntegrantes) => {
     const newArray = arrayIdIntegrantes.map((id) => axios.get(`http://localhost:3002/users/${id}`)
@@ -72,18 +75,25 @@ function ChatContact() {
     }
   },[])
   return (
-    <div className='pl-3 bg-pink w-100 bodyNav'>
+    <div className='pl-3 w-100 bodyNav'>
       <div className='sectionContact position-relative'> 
         <div className='divContacts'>
         {channels.map((item)=>{
-          return <div key={item.id_contact} className='d-flex' onClick={()=>joinCanal(item.id_canal)}>
+          return <div key={item.id_contact} className='d-flex' onClick={()=>{joinCanal(item.id_canal);setCurrentNameCanal(item.nameContact)}}>
                     <img src={require('../assets/img1.png')} alt="" width='50' />
                     <h3 className='text-chat mx-2'>{item.nameContact}</h3>
                   </div>
         })}
         </div>
-        <div className='modal-chat bg-pink'>
-          {showChat && (<Chat socket={socket} canal={currentCanal} setShowChat={setShowChat}/>)}  
+        <div className='modal-chat'>
+          {showChat?(<Chat socket={socket} canal={currentCanal} setShowChat={setShowChat} nameCanal={currentNameCanal}/>):(
+          <div className='banner d-flex justify-content-center align-items-center flex-column'>
+            <p>TalkTech</p>
+            <img src={require('../assets/banner.png')} width='300' alt="" />
+            <p>Bienvenidx 
+              <span>{nameUser}</span>
+            </p>
+          </div>)}  
         </div>
               
       </div>

@@ -15,6 +15,7 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const loginUser = () => {
+    console.log('click');
     if (emailUser !== "" && password !== "") {
       const userData = { email: emailUser, password: password };
 
@@ -22,6 +23,7 @@ function Login() {
         .post(url, userData)
         .then(function (res) {
           const response = res.status;
+
           if (response === 200) {
             sessionStorage.setItem('name_user', res.data.dataUser.name );
             sessionStorage.setItem('email_user', res.data.dataUser.email ); 

@@ -9,7 +9,6 @@ function NavBar() {
   const [prueba, setPrueba] = useState(false);
   const [email, setEmail] = useState("");
 
-  const navigate = useNavigate();
   function addContactModal(){
     const idModal = document.getElementById('miModal');
     idModal.setAttribute('class', 'show-modal');
@@ -19,13 +18,10 @@ function NavBar() {
     const idModal = document.getElementById('miModal');
     idModal.setAttribute('class', 'modal-success');
   }
+  const removeData = () => {
+    sessionStorage.clear()
+  }
 
-  const routerProfile = ()=>{
-    navigate('/profile');
-  }
-  const routerCanal = ()=>{
-    navigate('/canal');
-  }
   const addNewContact = () => {
     const idUser =sessionStorage.getItem('id_user')
     console.log(idUser);
@@ -49,9 +45,9 @@ function NavBar() {
 
   return (<>
     <div className='pruebaaaa'>
-    <nav className="navbar position-absolute z100 w-100 minHeight navbar-expand-lg navbar-dark bg-pink p-0">
+    <nav className="navbar position-absolute z100 w-100 minHeight navbar-expand-lg navbar-dark bg-purple p-0">
           <img src={require('../assets/logo_talktech.png')} alt="" className='img-talktech'/>
-            <a className="navbar-brand paddingNav" href="#">TalkTech</a>
+            <NavLink className="navbar-brand paddingNav" to="/chat-contact">TalkTech</NavLink>
   <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
   </button>
@@ -59,7 +55,7 @@ function NavBar() {
   <div className="collapse navbar-collapse" id="navbarSupportedContent">
     <ul className="navbar-nav mr-auto">
       <li className="nav-item active">
-        <a className="nav-link paddingNav" onClick={routerProfile}>Perfil</a>
+        <NavLink className="nav-link paddingNav" to='/profile'>Perfil</NavLink>
       </li>
       <li className="nav-item">
         <a className="nav-link paddingNav" onClick={addContactModal}>Agregar Contacto</a>
@@ -76,24 +72,24 @@ function NavBar() {
       </div>
       </li>
       <li className="nav-item">
-        <a className="nav-link paddingNav" href="#" onClick={routerCanal}>Crear Canal</a>
+        <NavLink className="nav-link paddingNav" to="/canal">Crear Canal</NavLink>
       </li>
       <li className="nav-item">
-        <a className="nav-link paddingNav" href="#">Cerrar Sesión</a>
+        <NavLink className="nav-link paddingNav" to="/" onClick={removeData}>Cerrar Sesión</NavLink>
       </li>
     </ul>
   </div>
 </nav>
 </div>
-<nav className=" navbar-expand-lg navbar-dark bg-pink nav-responsive" style={{height:'7vh'}}>
+<nav className=" navbar-expand-lg navbar-dark bg-purple nav-responsive" style={{height:'7vh'}}>
   <div className="container-fluid">
     <div className="" id="navbarNav">
       <ul className="navbarChat ">
       <li className="nav-item">
-          <NavLink className="style-none active" aria-current="page" to="/chat-contact"><a class="nav-link text-white style-none" href="">Chats</a></NavLink>
+          <NavLink className="style-none active nav-link text-white" aria-current="page" to="/chat-contact">Chats</NavLink>
         </li>
         <li className="nav-item">
-          <NavLink className="style-none" to="/contacts"><a className="nav-link text-white style-none" href="">Contactos</a></NavLink>
+          <NavLink className="style-none nav-link text-white" to="/contacts">Contactos</NavLink>
         </li>
       </ul>
     </div>

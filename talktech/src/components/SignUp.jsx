@@ -149,6 +149,7 @@ function SignUp() {
             placeholder="Ingrese nombre"
             onChange={(e) => {
               setName(e.target.value);
+              setError(false)
             }}
             value={name}
           />
@@ -159,6 +160,7 @@ function SignUp() {
             placeholder="Ingrese correo"
             onChange={(e) => {
               setEmail(e.target.value);
+              setError(false)
             }}
             value={email}
           />
@@ -169,6 +171,7 @@ function SignUp() {
             placeholder="Ingrese contraseña"
             onChange={(e) => {
               setPassword(e.target.value);
+              setError(false)
             }}
             value={password}
           />

@@ -5,11 +5,11 @@ const bcrypt = require("bcryptjs");
 
 
 const client = new Client({
-  host: 'localhost',
-  user: 'postgres',
-  port: 15432,
-  database: 'default_database',
-  password: 'postgres',
+  host: 'default-database.ccbljtzwelwv.us-east-1.rds.amazonaws.com',
+  user: 'adminlab',
+  port: 5432,
+  database: 'default-database',
+  password: 'pgadmin123',
 });
 
 client.connect();

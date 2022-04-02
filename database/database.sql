@@ -34,6 +34,8 @@ CONSTRAINT fk_canal FOREIGN KEY (id_canal)
 create table channels(
 id_channel serial,
 integrantes integer[],
+name_channel character varying,
+active_group boolean,
 CONSTRAINT pk_canals PRIMARY KEY (id_channel))
 
 

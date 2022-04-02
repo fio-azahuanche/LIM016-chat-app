@@ -1,6 +1,0 @@
-build:
-  docker:
-    web: talktech-backend/docker-compose.yml
-run:
-  web: npm run db-up && npm run dev && npm run socket
-

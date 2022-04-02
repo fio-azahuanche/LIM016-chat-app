@@ -2,7 +2,7 @@ import React,{useState} from 'react';
 import Chat from './Chat';
 import io from 'socket.io-client';
 import '../App.css';
-const socket=io.connect("http://localhost:3001")
+const socket=io.connect("http://localhost:3002")
 
 function Canal() {
 

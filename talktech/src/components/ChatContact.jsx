@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { io } from 'socket.io-client';
 import {v4 as uuid} from "uuid";
 import Chat from './Chat';
-const socket=io.connect("http://localhost:3001")
+const socket=io.connect("http://localhost:3002")
 function ChatContact() {
   const idUser = sessionStorage.getItem('id_user');
   const nameUser = sessionStorage.getItem('name_user');

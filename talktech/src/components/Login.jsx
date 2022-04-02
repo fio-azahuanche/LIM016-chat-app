@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import io from "socket.io-client";
-import "../App.css";
+//import io from "socket.io-client";
+import "../App.css";/* 
 const socket = io.connect("http://localhost:3001");
-const userLoggued = React.createContext({});
+const userLoggued = React.createContext({}); */
 
 const url = "http://localhost:3002/users/login";
 

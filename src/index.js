@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { Server } = require('socket.io');
@@ -14,7 +15,7 @@ app.use(require('./routes/index'));
 
 app.use(require('./routes/contacts'));
 
-const server = app.listen(3002);
+const server = app.listen(process.env.PORT);
 console.log('Server on port 3002');
 
 const io = new Server(server, {

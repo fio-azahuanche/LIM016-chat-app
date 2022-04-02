@@ -45,3 +45,5 @@ jobs:
         env:
           HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
           HEROKU_EMAIL: ${{ secrets.HEROKU_EMAIL }}
+          HEROKU_APP_NAME: ${{ secrets.HEROKU_APP_NAME }} #Must be unique in Heroku
+          buildpack: "https://github.com/HashNuke/heroku-buildpack-elixir.git"

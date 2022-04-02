@@ -16,7 +16,7 @@ app.use(require('./routes/index'));
 app.use(require('./routes/contacts'));
 
 const server = app.listen(process.env.PORT);
-console.log('Server on port 3002');
+console.log('Server on port process');
 
 const io = new Server(server, {
   cors: {
